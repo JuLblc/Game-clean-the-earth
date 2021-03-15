@@ -1,3 +1,79 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700|Roboto:100,300,700');
+:root{
+    --nav-backgrd-clr:#024400;
+    --btn-hover-clr:#ffda95;
+    --canvas-border-clr:#6e440d;
+}
+* {box-sizing:border-box;}
 body{
+    margin: 0;
+    height: 100vh;
+    font-size: 20px;
+    font-family: Roboto;
+}
+nav{
+    background-color:var(--nav-backgrd-clr);
+    width: 100%;
+    height: 15%;
+    display: flex; /*Pour centre l'image avec le margin auto*/
+}
+nav img{
+    height: calc(100%-20px);
+    width: auto;
+    margin:10px auto 10px auto; /*centrage image*/
+}
+main{
+    background-image: url("images/page-ackground.jpg");
+    height: calc(100vh - 15%); /*toute la hauteur - la nav*/
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 25%;
+    display: flex;
+    align-items: center;
+}
+#playing-content{
+    margin-left:auto;margin-right: auto;
+    width: 65%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+}
+#playing-info{
+    letter-spacing: 0.1em;
+    display: flex;
+    justify-content: space-around;
+    height: 5%;
+}
+#playing-info p{
+    margin: 0;
+}
+canvas{    
+    background-image: url("images/game-background6.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border:5px solid var(--canvas-border-clr);
+    width: 100%;
+    height: 80%;
+}
+#btns{
+    display: flex;
+    margin: auto;
+    height: 12%;
+    width: 50%;       
+}
+.btn{
+    font-size: 1em;
+    letter-spacing: 0.1em;
+    height: 70%;
+    border: 4px solid white;
+    color: white;
+    cursor: pointer;       
+    background-color: rgba(255,255,255,0);
+    margin: auto 3% auto 3%;
+    padding: 0 10% 0 10%;
     
+}
+.btn:hover{
+    color: var(--canvas-border-clr);
+    border-color: var(--canvas-border-clr);
 }

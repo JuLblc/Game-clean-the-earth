@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8" /> 
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Tetris</title>
-        <link rel="icon" type="image/png" sizes="32x32" href="images/icon-gameboy.png">
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <nav>
-            <img src="images/clean6.png" alt="logo">
-        </nav>
-        <main>
-            <canvas></canvas>
-            <aside>
-                <div>Time</div>
-                <div>Score</div>
-                <div>Accuracy</div>
-            </aside>
-            <div>
-                <button id="restart">Clean again!</button>
-                <button id="pause">Pause/Resume</button>
-            </div>
-        </main>
-    </body>
-    <script type="text/javascript" src="./script.js"></script>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Clean Earth Up</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/earth.jpg">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav>
+        <img src="images/clean6.png" alt="logo">
+    </nav>
+    <main>
+                         
+            <div id="playing-content">
+                <div id="playing-info">
+                    <p>Time</p>
+                    <p>Score</p>
+                    <p>Accuracy</p>
+                </div>   
+                <canvas id="playing-area"></canvas>
+                <div id="btns">
+                    <input type="button" id="restart" class="btn" value="Clean Again!">
+                    <input type="button" id="pause" class="btn" value="Pause/Resume">
+                </div>            
+            </div>            
+        
+    </main>
+</body>
+<script type="text/javascript" src="./script.js"></script>
+
 </html>
