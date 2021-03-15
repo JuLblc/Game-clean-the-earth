@@ -44,6 +44,9 @@ main{
     justify-content: space-around;
     height: 5%;
 }
+#playing-info div{
+    display: flex;
+}
 #playing-info p{
     margin: 0;
 }
@@ -57,21 +60,21 @@ canvas{
 }
 #btns{
     display: flex;
-    margin: auto;
-    height: 12%;
-    width: 50%;       
+    justify-content: center;
+    margin-top: auto;margin-bottom: auto;
+    height: 12%;      
 }
 .btn{
     font-size: 1em;
     letter-spacing: 0.1em;
     height: 70%;
+    width: 25%;
     border: 4px solid white;
     color: white;
     cursor: pointer;       
     background-color: rgba(255,255,255,0);
-    margin: auto 3% auto 3%;
-    padding: 0 10% 0 10%;
-    
+    padding: 0;
+    margin-left: 10px; margin-right: 10px;
 }
 .btn:hover{
     color: var(--canvas-border-clr);

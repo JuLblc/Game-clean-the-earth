@@ -14,22 +14,29 @@
         <img src="images/clean6.png" alt="logo">
     </nav>
     <main>
-                         
-            <div id="playing-content">
-                <div id="playing-info">
-                    <p>Time</p>
-                    <p>Score</p>
-                    <p>Accuracy</p>
-                </div>   
-                <canvas id="playing-area"></canvas>
-                <div id="btns">
-                    <input type="button" id="restart" class="btn" value="Clean Again!">
-                    <input type="button" id="pause" class="btn" value="Pause/Resume">
-                </div>            
-            </div>            
-        
+        <div id="playing-content">
+            <div id="playing-info">
+                <div>
+                    <p>Time:</p>
+                    <p id="timer">02:00</p>
+                </div>
+                <div>
+                    <p>Score:</p>
+                    <p>0</p>
+                </div>
+                <div>
+                    <p>Accuracy:</p>
+                    <p>100%</p>
+                </div>
+            </div>
+            <canvas id="playing-area"></canvas>
+            <div id="btns">
+                <input type="button" id="restart" class="btn" value="Clean Again!">
+                <input type="button" id="pause" class="btn" value="Pause">
+            </div>
+        </div>
     </main>
 </body>
+<script type="text/javascript" src="./countdown.js"></script>
 <script type="text/javascript" src="./script.js"></script>
-
 </html>
