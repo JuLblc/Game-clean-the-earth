@@ -5,7 +5,7 @@ const restartBtn = document.getElementById('restart');
 const pauseBtn = document.getElementById('pause');
 
 // get the DOM elements that will serve us to display the time:
-let timeRemaining = document.getElementById('timer');
+let timeRemaining = document.getElementById('countdown');
 
 function setPauseBtn() {
     pauseBtn.value = "Pause";
@@ -16,10 +16,15 @@ function setResumeBtn() {
 }
 
 function printTime() {
-    timeRemaining.innerHTML = chronometer.splitClick();
+    if (chronometer.timesIsUp() === "Time's up"){
+        document.getElementById('time').innerHTML = "";
+    }
+    timeRemaining.innerHTML = chronometer.timesIsUp();
 }
 
-restartBtn.addEventListener('click',()=>{
+restartBtn.addEventListener('click',()=>{ 
+    chronometer.stopClick();
+    chronometer.resetClick();
     chronometer.startClick(printTime);
 })
 

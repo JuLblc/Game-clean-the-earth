@@ -8,7 +8,6 @@
 body{
     margin: 0;
     height: 100vh;
-    font-size: 20px;
     font-family: Roboto;
 }
 nav{
@@ -23,32 +22,41 @@ nav img{
     margin:10px auto 10px auto; /*centrage image*/
 }
 main{
-    background-image: url("images/page-ackground.jpg");
+    background-image: url("images/page-background.png");
     height: calc(100vh - 15%); /*toute la hauteur - la nav*/
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 25%;
-    display: flex;
-    align-items: center;
 }
 #playing-content{
     margin-left:auto;margin-right: auto;
     width: 65%;
-    height: 90%;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
 #playing-info{
-    letter-spacing: 0.1em;
+    color: var(--nav-backgrd-clr);
+    letter-spacing: 0.05em;
     display: flex;
-    justify-content: space-around;
-    height: 5%;
+    height: 8%;
 }
 #playing-info div{
     display: flex;
+    width: 33%;
+    align-items:flex-end;
+    justify-content: center;
 }
+#playing-info img{
+    height: 50%;
+    width: auto;
+    margin:2% 2% 3% 2%;
+}    
 #playing-info p{
-    margin: 0;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    margin:2% 2% 3% 2%;
 }
 canvas{    
     background-image: url("images/game-background6.jpg");
@@ -61,15 +69,15 @@ canvas{
 #btns{
     display: flex;
     justify-content: center;
-    margin-top: auto;margin-bottom: auto;
+    align-items: center;
     height: 12%;      
 }
 .btn{
     font-size: 1em;
     letter-spacing: 0.1em;
-    height: 70%;
+    height: 50%;
     width: 25%;
-    border: 4px solid white;
+    border: 2px solid white;
     color: white;
     cursor: pointer;       
     background-color: rgba(255,255,255,0);
@@ -80,3 +88,34 @@ canvas{
     color: var(--canvas-border-clr);
     border-color: var(--canvas-border-clr);
 }
+
+@media (max-width: 800px) {
+    body {
+        font-size: 12px;
+    }
+}
+@media (min-width: 801px) and (max-width: 1000px)  {
+    body {
+        font-size: 13px;
+    }
+}
+@media (min-width: 1001px) and (max-width: 1280px)  {
+    body {
+        font-size: 14px;
+    }
+}
+@media (min-width: 1281px) and (max-width: 1440px)  {
+    body {
+        font-size: 16px;
+    }
+}
+@media (min-width: 1441px) and (max-width: 1920px)  {
+    body {
+        font-size: 18px;
+    }
+}
+
+/*sm - small (768px and up)
+md - medium (992px and up)
+lg - large (1200px and up)
+on parle de la width*/

@@ -24,9 +24,17 @@ class Chronometer {
       clearInterval(this.intervalId);
     }
     resetClick() {
-      this.currentTime = 120;
+      this.currentTime = 10;
     }
     splitClick() {
       return `${this.twoDigitsNumber(this.getMinutes())}:${this.twoDigitsNumber(this.getSeconds())}`;
+    }
+    timesIsUp(){
+      if (this.splitClick() === "00:00"){
+        this.stopClick();
+        return "Time's up";
+      } else {
+        return this.splitClick();
+      }
     }
   }
