@@ -1,7 +1,7 @@
 class Chronometer {
     constructor() {
       // ... your code goes here
-      this.currentTime = 10;
+      this.currentTime = 120;
       this.intervalId = 0;
   
     }
@@ -24,7 +24,7 @@ class Chronometer {
       clearInterval(this.intervalId);
     }
     resetClick() {
-      this.currentTime = 10;
+      this.currentTime = 120;
     }
     splitClick() {
       return `${this.twoDigitsNumber(this.getMinutes())}:${this.twoDigitsNumber(this.getSeconds())}`;

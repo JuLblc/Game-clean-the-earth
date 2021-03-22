@@ -1,0 +1,10 @@
+http://abrobecker.free.fr/text/EquationDeParabolePassantParTroisPoints.pdf
+http://abrobecker.free.fr/java/parabole.htm
+
+https://www.maths-et-tiques.fr/telech/Secondegre1ESL.pdf
+
+https://www.solumaths.com/fr/graphique-logiciel-traceur-courbe/tracer
+
+https://www.scriptol.fr/html5/canvas/courbe.php
+
+http://sacripant.fr/codes/40/animations-avec-javascript-requestanimationframe

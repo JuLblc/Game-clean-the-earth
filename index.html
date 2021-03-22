@@ -10,6 +10,8 @@
 </head>
 
 <body>
+    <audio id="bgAudio" loop="true"><source src="audio/ambiance.mp3"/></audio>
+    <audio id="gameAudio" loop="true"><source src="audio/ambiance-game.mp3"/></audio>
     <nav>
         <img src="images/clean6.png" alt="logo">
     </nav>
@@ -28,15 +30,19 @@
                     <img src="images/accuracy.svg">
                     <p id="accuracy">100%</p>
                 </div>
+                <div>
+                    <img src="images/Mute_Icon.svg" id="sound-img">                 
+                </div>
             </div>
             <canvas id="playing-area"></canvas>
             <div id="btns">
                 <input type="button" id="restart" class="btn" value="Clean Again!">
-                <input type="button" id="pause" class="btn" value="Pause">
+                <input type="button" id="pause" class="btn disabled" value="Pause" disabled>
             </div>
         </div>
     </main>
 </body>
-<script type="text/javascript" src="./countdown.js"></script>
-<script type="text/javascript" src="./script.js"></script>
+<script type="text/javascript" src="js/audio.js"></script>
+<script type="text/javascript" src="js/countdown.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </html>
