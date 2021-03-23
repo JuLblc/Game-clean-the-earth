@@ -7,24 +7,39 @@ const pauseBtn = document.getElementById('pause');
 // get the DOM elements that will serve us to display the time:
 let timeRemaining = document.getElementById('countdown');
 
+const myCanvas = document.querySelector('#playing-area');
+const ctx = myCanvas.getContext('2d');
 // const ctx = document.querySelector('canvas').getContext('2d');
 // const W = ctx.canvas.width;
 // const H = ctx.canvas.height;
 
-const myCanvas = document.querySelector('#playing-area');
-const ctx = myCanvas.getContext('2d');
 const H = myCanvas.clientHeight;
 const W = myCanvas.clientWidth;
-console.log(W,H);
+
+const CanvasW = ctx.canvas.width;
+const CanvasH = ctx.canvas.height;
+console.log('canvas origin dimension', CanvasW, CanvasH);
+
+ctx.canvas.width = W;
+ctx.canvas.height = H;
+
+console.log("client dimension", W, H);
+console.log('canvas new dimension ', ctx.canvas.width, ctx.canvas.height)
 
 let gameover = false;
 let gameIsOn = false;
-let projectile;
+let projectiles = [];
 
-function setPauseBtn() {   
+//function appelé en continue
+function draw() {
+    ctx.clearRect(0, 0, W, H);
+    projectiles.forEach(projectile => projectile.draw());
+}
+
+function setPauseBtn() {
     //btnPause disabled au chargement de la page 
-    if(pauseBtn.disabled){
-        pauseBtn.disabled  = false;
+    if (pauseBtn.disabled) {
+        pauseBtn.disabled = false;
         pauseBtn.classList.remove('disabled');
     }
     pauseBtn.value = "Pause";
@@ -38,39 +53,47 @@ function printTime() {
     timeRemaining.innerHTML = chronometer.timesIsUp();
 }
 
+function getProjectileDestination(canvas, event) {
+    let rect = canvas.getBoundingClientRect();
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
+    return { x, y };
+}
+
 let frames = 0;
 function animLoop() {
-  frames++;
-  projectile.draw();
+    frames++;
+    draw();
 
-  if (!gameover) {
-    raf = requestAnimationFrame(animLoop);
-  }
+    if (!gameover) {
+        raf = requestAnimationFrame(animLoop);
+    }
 }
 
 let raf;
 function startGame() {
     if (raf) {
-      cancelAnimationFrame(raf);
+        cancelAnimationFrame(raf);
     }
+
     gameIsOn = true;
     chronometer.stopClick();
     chronometer.resetClick();
     chronometer.startClick(printTime);
     setPauseBtn();
-    
-    if (checkSound()){
+
+    if (checkSound()) {
         setAudioToZero('gameAudio');
         playAudio('gameAudio');
         pauseAudio('bgAudio');
     };
-    
-    projectile = new Projectile();  
-    animLoop();
-  }
 
-restartBtn.addEventListener('click', () => {   
-    startGame(); 
+    animLoop();
+}
+
+restartBtn.addEventListener('click', () => {
+    projectiles = [];
+    startGame();
 })
 
 pauseBtn.addEventListener('click', () => {
@@ -80,7 +103,7 @@ pauseBtn.addEventListener('click', () => {
         gameIsOn = false;
         chronometer.stopClick();
         setResumeBtn();
-        if (checkSound()){
+        if (checkSound()) {
             playAudio('bgAudio');
             pauseAudio('gameAudio');
         };
@@ -89,11 +112,19 @@ pauseBtn.addEventListener('click', () => {
         gameIsOn = true;
         chronometer.startClick(printTime);
         setPauseBtn();
-        if (checkSound()){
+        if (checkSound()) {
             playAudio('gameAudio');
             pauseAudio('bgAudio');
         };
     }
+})
+
+myCanvas.addEventListener('click', (e) => {
+    let dest = getProjectileDestination(myCanvas, e);
+    if (gameIsOn) {
+        projectiles.push(new Projectile(dest,2));
+    }
+    console.log(projectiles);
 })
 
 soundCtrl.addEventListener('click', () => {

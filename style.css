@@ -58,13 +58,17 @@ main{
     align-items: center;
     margin:2% 2% 3% 2%;
 }
+#sound-img{
+    cursor:pointer;
+}
 canvas{    
-    bbackground-image: url("images/game-background.jpg");
+    background-image: url("images/game-background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     border:10px solid var(--canvas-border-clr);
     width: 100%;
     height: 80%;
+    cursor: url(images/red-target.png),url(https://cur.cursors-4u.net/cursors/cur-1/cur5.cur), crosshair;
 }
 #btns{
     display: flex;

@@ -8,3 +8,5 @@ https://www.solumaths.com/fr/graphique-logiciel-traceur-courbe/tracer
 https://www.scriptol.fr/html5/canvas/courbe.php
 
 http://sacripant.fr/codes/40/animations-avec-javascript-requestanimationframe
+
+https://darchevillepatrick.info/canvas/canvas_adaptative.htm
