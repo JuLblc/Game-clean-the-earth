@@ -40,6 +40,7 @@ main{
     letter-spacing: 0.05em;
     display: flex;
     height: 8%;
+    
 }
 #playing-info div{
     display: flex;

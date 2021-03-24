@@ -20,8 +20,9 @@ function setSound() {
         if(gameIsOn){
             playAudio('gameAudio');
             pauseAudio('bgAudio');
-        } else {
-            playAudio('bgAudio');
+        } else {   
+            // console.log("test imgbck canvas", myCanvas.style.backgroundImage, myCanvas.style.backgroundImage === `url("images/game-background.jpg")`);      
+            myCanvas.style.backgroundImage === `url("images/game-background.jpg")` ? playAudio('bgAudio') : playAudio('bgLooseAudio');
             pauseAudio('gameAudio');
         }
     }

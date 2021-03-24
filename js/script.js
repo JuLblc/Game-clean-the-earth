@@ -33,15 +33,33 @@ let projectiles = [];
 //function appelé en continue
 function draw() {
     ctx.clearRect(0, 0, W, H);
-    projectiles.forEach(projectile => projectile.draw());
+    if (projectiles.length === maxAmmo) {
+        // console.log("out of ammo");
+        drawOutOfAmmo();
+    }
+    projectiles.forEach((projectile, idx) => {
+        if (projectile.checkIfOut()) {
+            projectiles.splice(idx, 1);
+        } else {
+            projectile.draw();
+        }
+    })
+
+    // projectiles.forEach(projectile => projectile.draw());
 }
 
 function setPauseBtn() {
-    //btnPause disabled au chargement de la page 
+    //btnPause disabled au chargement de la page et après gameover
     if (pauseBtn.disabled) {
         pauseBtn.disabled = false;
         pauseBtn.classList.remove('disabled');
     }
+    //btnPause to disabled when game over
+    if (gameover) {
+        pauseBtn.disabled = true;
+        pauseBtn.classList.add('disabled');
+    }
+
     pauseBtn.value = "Pause";
 }
 
@@ -60,6 +78,22 @@ function getProjectileDestination(canvas, event) {
     return { x, y };
 }
 
+const imgOutofAmmo = document.createElement('img');
+imgOutofAmmo.src = "images/save-water.svg";
+const wImgOutOfAmmo = 45;
+const hImgOutOfAmmo = wImgOutOfAmmo / 0.8866;
+const xImgOutOfAmmo = W - wImgOutOfAmmo - W / 120;
+const yImgOutOfAmmo = H / 60;
+
+function drawOutOfAmmo() {
+    if (!imgOutofAmmo) {
+        console.log('image outOfAmmo non chargée');
+        return; // if `imgOutofAmmo` is not loaded yet => don't draw
+    }
+    // console.log(,xImgOutOfAmmo,yImgOutOfAmmo,wImgOutOfAmmo,hImgOutOfAmmo);
+    ctx.drawImage(imgOutofAmmo, xImgOutOfAmmo, yImgOutOfAmmo, wImgOutOfAmmo, hImgOutOfAmmo);
+}
+
 let frames = 0;
 function animLoop() {
     frames++;
@@ -67,6 +101,14 @@ function animLoop() {
 
     if (!gameover) {
         raf = requestAnimationFrame(animLoop);
+    } else {
+        gameIsOn = false;
+        ctx.clearRect(0, 0, W, H);
+        myCanvas.style.backgroundImage = "url('images/game-over-time.jpg')";
+        chronometer.stopClick();
+        setPauseBtn();
+        pauseAudio('gameAudio');
+        playAudio('bgLooseAudio');
     }
 }
 
@@ -76,6 +118,9 @@ function startGame() {
         cancelAnimationFrame(raf);
     }
 
+    projectiles = [];
+    gameover = false;
+    myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
     gameIsOn = true;
     chronometer.stopClick();
     chronometer.resetClick();
@@ -86,13 +131,19 @@ function startGame() {
         setAudioToZero('gameAudio');
         playAudio('gameAudio');
         pauseAudio('bgAudio');
+        pauseAudio('bgLooseAudio');
     };
 
     animLoop();
 }
 
+//onkeydow pour test gameover
+document.addEventListener('keydown', event => {
+    event.key === "s" ? gameover = true : gameover = false;
+    console.log(gameover);
+});
+
 restartBtn.addEventListener('click', () => {
-    projectiles = [];
     startGame();
 })
 
@@ -119,12 +170,15 @@ pauseBtn.addEventListener('click', () => {
     }
 })
 
+const maxAmmo = 3;
 myCanvas.addEventListener('click', (e) => {
     let dest = getProjectileDestination(myCanvas, e);
-    if (gameIsOn) {
-        projectiles.push(new Projectile(dest,2));
+    if (gameIsOn && projectiles.length < maxAmmo) {
+        projectiles.push(new Projectile(dest, 2));
+        playAudio('bubbles');
+    } else if(projectiles.length === maxAmmo){
+        playAudio('outOfAmmo');
     }
-    console.log(projectiles);
 })
 
 soundCtrl.addEventListener('click', () => {
