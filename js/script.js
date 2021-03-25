@@ -8,34 +8,24 @@ const pauseBtn = document.getElementById('pause');
 let timeRemaining = document.getElementById('countdown');
 
 const myCanvas = document.querySelector('#playing-area');
-const ctx = myCanvas.getContext('2d');
-// const ctx = document.querySelector('canvas').getContext('2d');
-// const W = ctx.canvas.width;
-// const H = ctx.canvas.height;
+myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
 
+const ctx = myCanvas.getContext('2d');
+
+//Dimension dynamique du canvas
 const H = myCanvas.clientHeight;
 const W = myCanvas.clientWidth;
-
-const CanvasW = ctx.canvas.width;
-const CanvasH = ctx.canvas.height;
-console.log('canvas origin dimension', CanvasW, CanvasH);
-
 ctx.canvas.width = W;
 ctx.canvas.height = H;
 
-console.log("client dimension", W, H);
-console.log('canvas new dimension ', ctx.canvas.width, ctx.canvas.height)
-
-let gameover = false;
-console.log("variable:", gameover, "function", gameOver());
 let gameIsOn = false;
 let projectiles = [];
+let targets = [];
 
 //function appelé en continue
 function draw() {
     ctx.clearRect(0, 0, W, H);
     if (projectiles.length === maxAmmo) {
-        // console.log("out of ammo");
         drawOutOfAmmo();
     }
     projectiles.forEach((projectile, idx) => {
@@ -46,7 +36,7 @@ function draw() {
         }
     })
 
-    // projectiles.forEach(projectile => projectile.draw());
+    targets.forEach(target => target.draw());
 }
 
 function setPauseBtn() {
@@ -100,7 +90,6 @@ function animLoop() {
     frames++;
     draw();
 
-    console.log("variable:", gameover, "function", gameOver());
     if (!gameOver()) {
         raf = requestAnimationFrame(animLoop);
     } else {
@@ -110,7 +99,7 @@ function animLoop() {
         chronometer.stopClick();
         setPauseBtn();
         checkSound() ? pauseAudio('gameAudio') : "";
-        checkSound()  ?playAudio('gameOver'): "";
+        checkSound() ? playAudio('gameOver'): "";
         checkSound() ? playAudio('bgLooseAudio') : "";
     }
 }
@@ -122,32 +111,32 @@ function startGame() {
     }
 
     projectiles = [];
+    targets = [];
     myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
     gameIsOn = true;
     chronometer.stopClick();
     chronometer.resetClick();
     chronometer.startClick(printTime);
-    gameover = false;
-    console.log("variable:", gameover, "function", gameOver());
     setPauseBtn();
 
     if (checkSound()) {
         setAudioToZero('gameAudio');
         playAudio('gameAudio');
-        pauseAudio('bgAudio');
-        pauseAudio('bgLooseAudio');
+        pauseAudio('bgAudio');  
+        pauseAudio('bgLooseAudio');      
     };
 
     animLoop();
 }
 
+const maxTarget = 10;
 function gameOver(){
-    return chronometer.timesIsUp() === "Time's up" ? true : false;
+    return (chronometer.timesIsUp() === "Time's up" || targets.length === maxTarget) ? true : false;
 }
 
-//onkeydow pour test gameover
+//onkeydow pour test création target
 document.addEventListener('keydown', event => {
-    event.key === "s" ? gameover = true : gameover = false;
+    event.key === "t" ? targets.push(new Target()) : "";
 });
 
 restartBtn.addEventListener('click', () => {
@@ -181,7 +170,7 @@ const maxAmmo = 3;
 myCanvas.addEventListener('click', (e) => {
     let dest = getProjectileDestination(myCanvas, e);
     if (gameIsOn && projectiles.length < maxAmmo) {
-        projectiles.push(new Projectile(dest, 2));
+        projectiles.push(new Projectile(dest, 3));
         checkSound() ? playAudio('bubbles'): "" ;        
     } else if(projectiles.length === maxAmmo){
         checkSound() ? playAudio('outOfAmmo'): "" ;

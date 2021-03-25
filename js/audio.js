@@ -16,12 +16,10 @@ function setSound() {
     } else {
         soundCtrl.setAttribute('src', 'images/Speaker_Icon.svg');
         sounds.forEach(sound => sound.muted = false)
-        //if game is On => play game audio else play ambiance
         if(gameIsOn){
             playAudio('gameAudio');
             pauseAudio('bgAudio');
-        } else {   
-            // console.log("test imgbck canvas", myCanvas.style.backgroundImage, myCanvas.style.backgroundImage === `url("images/game-background.jpg")`);      
+        } else {         
             myCanvas.style.backgroundImage === `url("images/game-background.jpg")` ? playAudio('bgAudio') : playAudio('bgLooseAudio');
             pauseAudio('gameAudio');
         }

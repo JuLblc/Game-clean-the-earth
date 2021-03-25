@@ -22,14 +22,14 @@ class Projectile {
             this.ac.x = this.x;
             this.ac.y = this.y;
 
-            // sens de déplacement {x,y} x = 1 => vers le droite, x = -1 vers la gauche
+            // sens de déplacement {x,y} x = 1:droite, x = -1:gauche
             this.sens = {};
             if (this.dest.x < this.x) {
                 this.sens.x = -1;
             } else { // gestion du cas où = ?
                 this.sens.x = 1;
             }
-            // sens de déplacement {x,y} y = -1 => vers le haut, y=1 vers le bas
+            // sens de déplacement {x,y} y = -1:haut, y = 1:bas
             if (this.dest.y < this.y) {
                 this.sens.y = -1;
             } else { // gestion du cas où = ?
@@ -52,11 +52,11 @@ class Projectile {
         }
 
         // console.log("dessin projectile", "x:", this.ac.x, "y:", this.ac.y);
-        this.moveObject();        
+        this.moveProjectile();        
         ctx.drawImage(this.imgDrop, this.ac.x, this.ac.y, this.w, this.h);        
     }
 
-    moveObject() {
+    moveProjectile() {
         // calcul distance {x - x',y - y'}
         this.dist.x = Math.abs(this.ac.x - this.dest.x);
         this.dist.y = Math.abs(this.ac.y - this.dest.y);
@@ -71,9 +71,6 @@ class Projectile {
         // rajoute à nos coordonnées actuel le déplacement dans le bon sens
         this.ac.x += this.move.x * this.sens.x;
         this.ac.y += this.move.y * this.sens.y;
-
-        // retourne si l'objet est arrivé à son objectif -Vpx=marge d'erreur-
-        // return (this.dist.x <= this.speed && this.dist.y <= this.speed) ? true : false;
     };
 
     checkIfOut(){
