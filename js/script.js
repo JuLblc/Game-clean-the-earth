@@ -27,6 +27,7 @@ console.log("client dimension", W, H);
 console.log('canvas new dimension ', ctx.canvas.width, ctx.canvas.height)
 
 let gameover = false;
+console.log("variable:", gameover, "function", gameOver());
 let gameIsOn = false;
 let projectiles = [];
 
@@ -55,7 +56,7 @@ function setPauseBtn() {
         pauseBtn.classList.remove('disabled');
     }
     //btnPause to disabled when game over
-    if (gameover) {
+    if (gameOver()) {
         pauseBtn.disabled = true;
         pauseBtn.classList.add('disabled');
     }
@@ -99,7 +100,8 @@ function animLoop() {
     frames++;
     draw();
 
-    if (!gameover) {
+    console.log("variable:", gameover, "function", gameOver());
+    if (!gameOver()) {
         raf = requestAnimationFrame(animLoop);
     } else {
         gameIsOn = false;
@@ -107,8 +109,9 @@ function animLoop() {
         myCanvas.style.backgroundImage = "url('images/game-over-time.jpg')";
         chronometer.stopClick();
         setPauseBtn();
-        pauseAudio('gameAudio');
-        playAudio('bgLooseAudio');
+        checkSound() ? pauseAudio('gameAudio') : "";
+        checkSound()  ?playAudio('gameOver'): "";
+        checkSound() ? playAudio('bgLooseAudio') : "";
     }
 }
 
@@ -119,12 +122,13 @@ function startGame() {
     }
 
     projectiles = [];
-    gameover = false;
     myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
     gameIsOn = true;
     chronometer.stopClick();
     chronometer.resetClick();
     chronometer.startClick(printTime);
+    gameover = false;
+    console.log("variable:", gameover, "function", gameOver());
     setPauseBtn();
 
     if (checkSound()) {
@@ -137,10 +141,13 @@ function startGame() {
     animLoop();
 }
 
+function gameOver(){
+    return chronometer.timesIsUp() === "Time's up" ? true : false;
+}
+
 //onkeydow pour test gameover
 document.addEventListener('keydown', event => {
     event.key === "s" ? gameover = true : gameover = false;
-    console.log(gameover);
 });
 
 restartBtn.addEventListener('click', () => {
@@ -175,9 +182,9 @@ myCanvas.addEventListener('click', (e) => {
     let dest = getProjectileDestination(myCanvas, e);
     if (gameIsOn && projectiles.length < maxAmmo) {
         projectiles.push(new Projectile(dest, 2));
-        playAudio('bubbles');
+        checkSound() ? playAudio('bubbles'): "" ;        
     } else if(projectiles.length === maxAmmo){
-        playAudio('outOfAmmo');
+        checkSound() ? playAudio('outOfAmmo'): "" ;
     }
 })
 
