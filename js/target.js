@@ -1,6 +1,6 @@
 const images = ['cartman_hitler_icon.png','pablo.png','hanouna.png','kim.png','terrorist.jpg','kitty.png','trump1.png','trump2.png'];
 const sensArr =[-1,1];
-const speedArr =[[2,5],[5,2]];
+const speedArr =[[2,5],[5,2],[3,4],[4,3]];
 
 
 function random(from, to) {
@@ -24,11 +24,6 @@ class Target {
             this.x = random(0, W - this.w);    //x de départ
             this.y = random(0, H - this.h);    //y de départ
 
-            // position actuelle {x, y}, ici de départ
-            this.ac = {};
-            this.ac.x = this.x;
-            this.ac.y = this.y;
-
             // sens de déplacement {x,y} x = 1:droite, x = -1:gauche, y = -1:haut, y = 1:bas
             this.sens = {};
             this.sens.x = sensArr[random(0,sensArr.length)]; // Initialisation aléatoire. Soit -1 soit 1
@@ -49,14 +44,14 @@ class Target {
         }
         // console.log("dessin target", "x:", this.ac.x, "y:", this.ac.y);
         this.moveTarget();   
-        ctx.drawImage(this.imgTarget, this.ac.x, this.ac.y, this.w, this.h);        
+        ctx.drawImage(this.imgTarget, this.x, this.y, this.w, this.h);        
     }
     moveTarget(){
-        this.ac.x += this.speed.x * this.sens.x;
-        this.ac.y += this.speed.y * this.sens.y;
+        this.x += this.speed.x * this.sens.x;
+        this.y += this.speed.y * this.sens.y;
         //Change direction avant de sortir du Canvas
-        let xToCheck = this.ac.x + this.speed.x * this.sens.x;
-        let yToCheck = this.ac.y + this.speed.y * this.sens.y;
+        let xToCheck = this.x + this.speed.x * this.sens.x;
+        let yToCheck = this.y + this.speed.y * this.sens.y;
         if (xToCheck + this.w > W || xToCheck < 0){
             this.sens.x *= -1;
         }

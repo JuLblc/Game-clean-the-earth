@@ -7,57 +7,46 @@
 * {box-sizing:border-box;}
 body{
     margin: 0;
-    height: 100vh;
     font-family: Roboto;
 }
 nav{
     background-color:var(--nav-backgrd-clr);
-    width: 100%;
-    height: 15%;
     display: flex; /*Pour centre l'image avec le margin auto*/
 }
 nav img{
-    height: calc(100%-20px);
-    width: auto;
     margin:10px auto 10px auto; /*centrage image*/
+    height: 125px;
 }
 main{
-    background-image: url("images/page-background.png");
-    height: calc(100vh - 15%); /*toute la hauteur - la nav*/
+    background-image: url("images/page-background.png");    
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 25%;
 }
 #playing-content{
     margin-left:auto;margin-right: auto;
-    width: 65%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
 }
 #playing-info{
     color: var(--nav-backgrd-clr);
+    width: 1200px; /*idem canvas*/
+    margin-top: 20px;
+    margin-left:auto;margin-right: auto; /*pour centrage*/
     letter-spacing: 0.05em;
-    display: flex;
-    height: 8%;
-    
+    display: flex;    
 }
 #playing-info div{
     display: flex;
     width: 25%;
-    align-items:flex-end;
+    align-items:center;
     justify-content: center;
+    font-size: 1.3em;
 }
 #playing-info img{
-    height: 50%;
-    width: auto;
-    margin:2% 2% 3% 2%;
+    height: 40px;
+    margin: 10px;
 }    
-#playing-info p{
-    height: 50%;
-    display: flex;
-    align-items: center;
-    margin:2% 2% 3% 2%;
+#playing-info p{    
+    margin:10px;
 }
 #sound-img{
     cursor:pointer;
@@ -67,21 +56,20 @@ canvas{
     background-repeat: no-repeat;
     background-size: cover;
     border:10px solid var(--canvas-border-clr);
-    width: 100%;
-    height: 80%;
+    display: block ;
+    margin-left:auto;margin-right: auto; /*pour centrage*/
     cursor: url(images/red-target.png),url(https://cur.cursors-4u.net/cursors/cur-1/cur5.cur), crosshair;
 }
 #btns{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 12%;      
+    text-align: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
 }
 .btn{
     font-size: 1em;
     letter-spacing: 0.1em;
-    height: 50%;
-    width: 25%;
+    height: 2em;
+    width: 250px;
     border: 2px solid white;
     color: white;
     cursor: pointer;       
@@ -94,34 +82,8 @@ canvas{
     border-color: var(--canvas-border-clr);
 }
 .disabled {
-    pointer-events: none;  /**<-----------*/
+    pointer-events: none;
     opacity: 0.4;
-}
-
-@media (max-width: 800px) {
-    body {
-        font-size: 12px;
-    }
-}
-@media (min-width: 801px) and (max-width: 1000px)  {
-    body {
-        font-size: 13px;
-    }
-}
-@media (min-width: 1001px) and (max-width: 1280px)  {
-    body {
-        font-size: 14px;
-    }
-}
-@media (min-width: 1281px) and (max-width: 1440px)  {
-    body {
-        font-size: 16px;
-    }
-}
-@media (min-width: 1441px) and (max-width: 1920px)  {
-    body {
-        font-size: 18px;
-    }
 }
 
 /*sm - small (768px and up)

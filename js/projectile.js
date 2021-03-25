@@ -15,12 +15,7 @@ class Projectile {
             this.w = 25;
             this.h = this.w / imgRatio;
             this.x = W / 2 - this.w / 2;    //x de départ
-            this.y = H - this.h - H/12;      //y de départ
-
-            // position actuelle {x, y}, ici de départ
-            this.ac = {};
-            this.ac.x = this.x;
-            this.ac.y = this.y;
+            this.y = H - this.h - H / 12;   //y de départ
 
             // sens de déplacement {x,y} x = 1:droite, x = -1:gauche
             this.sens = {};
@@ -52,14 +47,14 @@ class Projectile {
         }
 
         // console.log("dessin projectile", "x:", this.ac.x, "y:", this.ac.y);
-        this.moveProjectile();        
-        ctx.drawImage(this.imgDrop, this.ac.x, this.ac.y, this.w, this.h);        
+        this.moveProjectile();
+        ctx.drawImage(this.imgDrop, this.x, this.y, this.w, this.h);
     }
 
     moveProjectile() {
         // calcul distance {x - x',y - y'}
-        this.dist.x = Math.abs(this.ac.x - this.dest.x);
-        this.dist.y = Math.abs(this.ac.y - this.dest.y);
+        this.dist.x = Math.abs(this.x - this.dest.x);
+        this.dist.y = Math.abs(this.y - this.dest.y);
 
         // racine carré de A² + B² (pythagore) -> donne l'hypoténuse
         this.hypo = Math.sqrt((this.dist.x * this.dist.x) + (this.dist.y * this.dist.y));
@@ -69,16 +64,29 @@ class Projectile {
         this.move.y = (this.dist.y * this.speed) / this.hypo;
 
         // rajoute à nos coordonnées actuel le déplacement dans le bon sens
-        this.ac.x += this.move.x * this.sens.x;
-        this.ac.y += this.move.y * this.sens.y;
+        this.x += this.move.x * this.sens.x;
+        this.y += this.move.y * this.sens.y;
     };
 
-    checkIfOut(){
-        try{
-            return (this.ac.x < 0 || this.ac.x > W || this.ac.y < 0 || this.ac.y > H) ? true : false;
+    checkIfOut() {
+        try {
+            return (this.x < 0 || this.x > W || this.y < 0 || this.y > H) ? true : false;
         }
-        catch(err){
-            console.log("erreur sur CheckIfOut:",err.message,projectiles);
+        catch (err) {
+            console.log("erreur sur CheckIfOut:", err.message, projectiles);
         }
+    }
+
+
+    hits(targets) {
+        targets.forEach(target => {
+            //Vérifier this.projectile en collision avec element target actuel de l'itération
+            return (
+                target.x + target.w > this.x &&     //droit target vs gauche projectile
+                target.x <  this.x + this.w &&      // gauche target vs droit projectile
+                target.y + target.h > this.y &&     // bas de la target vs haut du projectile
+                target.y <this.y + this.h           
+            )
+        })
     }
 }

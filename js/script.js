@@ -8,15 +8,11 @@ const pauseBtn = document.getElementById('pause');
 let timeRemaining = document.getElementById('countdown');
 
 const myCanvas = document.querySelector('#playing-area');
-myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
+// myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
 
 const ctx = myCanvas.getContext('2d');
-
-//Dimension dynamique du canvas
-const H = myCanvas.clientHeight;
-const W = myCanvas.clientWidth;
-ctx.canvas.width = W;
-ctx.canvas.height = H;
+const W = ctx.canvas.width;
+const H = ctx.canvas.height;
 
 let gameIsOn = false;
 let projectiles = [];
@@ -33,6 +29,7 @@ function draw() {
             projectiles.splice(idx, 1);
         } else {
             projectile.draw();
+            // projectile.hits(targets);
         }
     })
 
