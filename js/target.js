@@ -43,7 +43,7 @@ class Target {
             return; // if `this.imgDrop` is not loaded yet => don't draw
         }
         // console.log("dessin target", "x:", this.ac.x, "y:", this.ac.y);
-        this.moveTarget();   
+        // this.moveTarget();   
         ctx.drawImage(this.imgTarget, this.x, this.y, this.w, this.h);        
     }
     moveTarget(){

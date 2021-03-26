@@ -53,6 +53,7 @@ main{
 }
 canvas{    
     background-image: url("images/game-background.jpg");
+    background-position: 0 20%;
     background-repeat: no-repeat;
     background-size: cover;
     border:10px solid var(--canvas-border-clr);

@@ -6,9 +6,11 @@ const pauseBtn = document.getElementById('pause');
 
 // get the DOM elements that will serve us to display the time:
 let timeRemaining = document.getElementById('countdown');
+let displayScore = document.getElementById('score');
+let displayAccuracy = document.getElementById('accuracy');
 
 const myCanvas = document.querySelector('#playing-area');
-// myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
+myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
 
 const ctx = myCanvas.getContext('2d');
 const W = ctx.canvas.width;
@@ -17,6 +19,10 @@ const H = ctx.canvas.height;
 let gameIsOn = false;
 let projectiles = [];
 let targets = [];
+let points = 0;
+let usedAmmo = 0;
+let targetReached = 0;
+let accuracy = 0;
 
 //function appelé en continue
 function draw() {
@@ -27,13 +33,31 @@ function draw() {
     projectiles.forEach((projectile, idx) => {
         if (projectile.checkIfOut()) {
             projectiles.splice(idx, 1);
+            updateAccuracy();
         } else {
             projectile.draw();
-            // projectile.hits(targets);
+            //Si projectile atteint cible
+            if (projectile.hits(targets)){
+                projectiles.splice(idx, 1); // supp projectile du tableau
+                //afficher image splash
+                updateScore();
+                updateAccuracy();
+                // check augmentation difficulté
+            };
         }
     })
 
     targets.forEach(target => target.draw());
+}
+
+function updateScore(){
+    points += 10;
+    displayScore.innerHTML = points;
+}
+
+function updateAccuracy(){
+    accuracy = Math.round(targetReached * 100 / (usedAmmo - projectiles.length));
+    displayAccuracy.innerHTML = accuracy + "%";
 }
 
 function setPauseBtn() {
@@ -106,9 +130,11 @@ function startGame() {
     if (raf) {
         cancelAnimationFrame(raf);
     }
-
+    //Ré-initialisation variable
     projectiles = [];
     targets = [];
+    points = 0;
+    usedAmmo = 0;
     myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
     gameIsOn = true;
     chronometer.stopClick();
@@ -163,10 +189,11 @@ pauseBtn.addEventListener('click', () => {
     }
 })
 
-const maxAmmo = 3;
+const maxAmmo = 10;
 myCanvas.addEventListener('click', (e) => {
     let dest = getProjectileDestination(myCanvas, e);
     if (gameIsOn && projectiles.length < maxAmmo) {
+        usedAmmo++;
         projectiles.push(new Projectile(dest, 3));
         checkSound() ? playAudio('bubbles'): "" ;        
     } else if(projectiles.length === maxAmmo){

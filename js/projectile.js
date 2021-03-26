@@ -77,16 +77,17 @@ class Projectile {
         }
     }
 
-
     hits(targets) {
-        targets.forEach(target => {
-            //Vérifier this.projectile en collision avec element target actuel de l'itération
-            return (
-                target.x + target.w > this.x &&     //droit target vs gauche projectile
-                target.x <  this.x + this.w &&      // gauche target vs droit projectile
+        let initLength = targets.length;
+        targets.forEach((target, idx) => {
+            if (target.x + target.w > this.x &&     // droit target vs gauche projectile
+                target.x < this.x + this.w &&       // gauche target vs droit projectile
                 target.y + target.h > this.y &&     // bas de la target vs haut du projectile
-                target.y <this.y + this.h           
-            )
-        })
+                target.y < this.y + this.h) {       // haut de la target vs bas du projectile
+                targets.splice(idx, 1);             // supp projectile du tableau
+                targetReached++;            
+            }
+        });
+        return initLength > targets.length ? true : false;
     }
 }
