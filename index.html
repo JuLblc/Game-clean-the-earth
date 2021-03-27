@@ -16,6 +16,7 @@
     <audio id="bubbles"><source src="audio/bubbles.mp3"/></audio>
     <audio id="outOfAmmo"><source src="audio/outOfAmmo.mp3"/></audio>
     <audio id="gameOver"><source src="audio/game-over.mp3"/></audio>
+    <audio id="splash"><source src="audio/splash.mp3"/></audio>
     <nav>
         <img src="images/clean6.png" alt="logo">
     </nav>
@@ -24,7 +25,7 @@
             <div id="playing-info">
                 <div>
                     <img src="images/timer.svg">
-                    <p id="countdown">02:00</p>
+                    <p id="countdown">01:00</p>
                 </div>
                 <div>
                     <p>Score: </p>
@@ -35,12 +36,16 @@
                     <p id="accuracy">0%</p>
                 </div>
                 <div>
+                    <img src="images/robinet.svg">
+                    <p id="ammo"></p>
+                </div>
+                <div>
                     <img src="images/Mute_Icon.svg" id="sound-img">                 
                 </div>
             </div>
             <canvas id="playing-area" width="1200" height="600"></canvas>
             <div id="btns">
-                <input type="button" id="restart" class="btn" value="Clean Again!">
+                <input type="button" id="restart" class="btn clignote" value="Let's clean!">
                 <input type="button" id="pause" class="btn disabled" value="Pause" disabled>
             </div>
         </div>

@@ -36,7 +36,7 @@ main{
 }
 #playing-info div{
     display: flex;
-    width: 25%;
+    width: 20%;
     align-items:center;
     justify-content: center;
     font-size: 1.3em;
@@ -81,6 +81,13 @@ canvas{
 .btn:hover{
     color: var(--canvas-border-clr);
     border-color: var(--canvas-border-clr);
+}
+.clignote {
+    color:white;
+    animation: clignote 2.5s linear infinite;
+}
+@keyframes clignote {  
+    50% { opacity: 0.4; }
 }
 .disabled {
     pointer-events: none;

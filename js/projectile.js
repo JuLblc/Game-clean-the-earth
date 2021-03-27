@@ -69,12 +69,12 @@ class Projectile {
     };
 
     checkIfOut() {
-        try {
+        // try {
             return (this.x < 0 || this.x > W || this.y < 0 || this.y > H) ? true : false;
-        }
-        catch (err) {
-            console.log("erreur sur CheckIfOut:", err.message, projectiles);
-        }
+        // }
+        // catch (err) {
+        //     console.log("erreur sur CheckIfOut:", err.message, projectiles);
+        // }
     }
 
     hits(targets) {
@@ -84,8 +84,10 @@ class Projectile {
                 target.x < this.x + this.w &&       // gauche target vs droit projectile
                 target.y + target.h > this.y &&     // bas de la target vs haut du projectile
                 target.y < this.y + this.h) {       // haut de la target vs bas du projectile
-                targets.splice(idx, 1);             // supp projectile du tableau
-                targetReached++;            
+                targets.splice(idx, 1);             // supp target du tableau
+                splashes.push({x: target.x,y: target.y,frame:frames});    //ajout splash
+                checkSound() ? playAudio('splash'): "";
+                targetReached++;                        
             }
         });
         return initLength > targets.length ? true : false;

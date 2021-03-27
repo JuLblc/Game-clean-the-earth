@@ -8,6 +8,7 @@ const pauseBtn = document.getElementById('pause');
 let timeRemaining = document.getElementById('countdown');
 let displayScore = document.getElementById('score');
 let displayAccuracy = document.getElementById('accuracy');
+let displayAmmo = document.getElementById('ammo');
 
 const myCanvas = document.querySelector('#playing-area');
 myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
@@ -19,6 +20,7 @@ const H = ctx.canvas.height;
 let gameIsOn = false;
 let projectiles = [];
 let targets = [];
+let splashes = [];
 let points = 0;
 let usedAmmo = 0;
 let targetReached = 0;
@@ -27,8 +29,10 @@ let accuracy = 0;
 //function appelé en continue
 function draw() {
     ctx.clearRect(0, 0, W, H);
+    ctx.fillRect(400,H-300,400,300);
+    drawPicture(imgWaterGush,xImgWaterGush,yImgWaterGush, wImgWaterGush);
     if (projectiles.length === maxAmmo) {
-        drawOutOfAmmo();
+        drawPicture(imgOutofAmmo, xImgOutOfAmmo, yImgOutOfAmmo, wImgOutOfAmmo);
     }
     projectiles.forEach((projectile, idx) => {
         if (projectile.checkIfOut()) {
@@ -38,16 +42,29 @@ function draw() {
             projectile.draw();
             //Si projectile atteint cible
             if (projectile.hits(targets)){
-                projectiles.splice(idx, 1); // supp projectile du tableau
-                //afficher image splash
+                projectiles.splice(idx, 1); // supp projectile du tableau                
                 updateScore();
                 updateAccuracy();
-                // check augmentation difficulté
             };
         }
     })
+    updateAmmo();
+    //Création de la vague de target quand plus de target ou toutes les 15 secondes
+    if ((targets.length === 0)||(framesBeforeWave % 900 === 0)){
+        generateTargetWave();
+        framesBeforeWave = 0;
+    }
 
     targets.forEach(target => target.draw());
+    splashes.forEach((splash,idx) => {
+        //splash affiché pendant 60 frames
+        (frames + 1 - splash.frame) % 60 === 0 ? splashes.splice(idx,1) : drawPicture(imgSplash,splash.x, splash.y,wImgSplash);        
+    })
+}
+
+function updateAmmo(){
+    displayAmmo.innerHTML = `${maxAmmo - projectiles.length}/${maxAmmo}`;
+    // console.log(maxAmmo, projectiles.length, (maxAmmo - projectiles.length) / maxAmmo);
 }
 
 function updateScore(){
@@ -90,26 +107,53 @@ function getProjectileDestination(canvas, event) {
     return { x, y };
 }
 
+let waveNbr = 0;
+function generateTargetWave(){
+
+    waveNbr++;
+    for (let i = 0; i < 5; i++){  //5 targets par vague
+        targets.push(new Target());
+    }
+}
+
+//Image watergushing
+const imgWaterGush = document.createElement('img');
+imgWaterGush.src = "images/watergun.png";
+const wImgWaterGush = 60;
+const xImgWaterGush = W / 2 - wImgWaterGush / 2;
+const yImgWaterGush = H - 80;
+
+//Image splash
+const imgSplash = document.createElement('img');
+imgSplash.src = "images/water-splash.png";
+const wImgSplash = 45;
+
+//Image out of Ammo
 const imgOutofAmmo = document.createElement('img');
 imgOutofAmmo.src = "images/save-water.svg";
 const wImgOutOfAmmo = 45;
-const hImgOutOfAmmo = wImgOutOfAmmo / 0.8866;
 const xImgOutOfAmmo = W - wImgOutOfAmmo - W / 120;
 const yImgOutOfAmmo = H / 60;
 
-function drawOutOfAmmo() {
-    if (!imgOutofAmmo) {
-        console.log('image outOfAmmo non chargée');
-        return; // if `imgOutofAmmo` is not loaded yet => don't draw
+function drawPicture(img, x, y, w) {
+    
+    let imgRatio = img.naturalWidth / img.naturalHeight;
+    let hImg = w / imgRatio;
+
+    if (!img) {
+        console.log('image fn drawPicture non chargée');
+        return; // if `img` is not loaded yet => don't draw
     }
-    // console.log(,xImgOutOfAmmo,yImgOutOfAmmo,wImgOutOfAmmo,hImgOutOfAmmo);
-    ctx.drawImage(imgOutofAmmo, xImgOutOfAmmo, yImgOutOfAmmo, wImgOutOfAmmo, hImgOutOfAmmo);
+    ctx.drawImage(img, x, y, w, hImg);
 }
 
 let frames = 0;
+let framesBeforeWave = 0;
 function animLoop() {
     frames++;
-    draw();
+    framesBeforeWave++;
+
+    gameIsOn ? draw() : "";
 
     if (!gameOver()) {
         raf = requestAnimationFrame(animLoop);
@@ -133,9 +177,18 @@ function startGame() {
     //Ré-initialisation variable
     projectiles = [];
     targets = [];
+    splashes = [];
     points = 0;
     usedAmmo = 0;
+    accuracy = 0;
+    targetReached = 0;
+    waveNbr = 0;
+    displayScore.innerHTML = points;
+    displayAccuracy.innerHTML = "0%";
+    updateAmmo();
     myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
+    restartBtn.value = "Clean Again!";
+    restartBtn.classList.remove('clignote');
     gameIsOn = true;
     chronometer.stopClick();
     chronometer.resetClick();
@@ -148,19 +201,23 @@ function startGame() {
         pauseAudio('bgAudio');  
         pauseAudio('bgLooseAudio');      
     };
-
     animLoop();
 }
 
 const maxTarget = 10;
 function gameOver(){
-    return (chronometer.timesIsUp() === "Time's up" || targets.length === maxTarget) ? true : false;
+   return (chronometer.timesIsUp() === "Time's up" || targets.length > maxTarget) ? true : false;
+//    return chronometer.timesIsUp() === "Time's up" ? true : false;
 }
 
-//onkeydow pour test création target
+// onkeydown pour test création target
 document.addEventListener('keydown', event => {
     event.key === "t" ? targets.push(new Target()) : "";
 });
+// onkeydown pour test move target
+// document.addEventListener('keydown', event => {
+//     event.key === "m" ? targets.forEach(target => target.moveTarget()) : "";
+// });
 
 restartBtn.addEventListener('click', () => {
     startGame();
@@ -189,7 +246,7 @@ pauseBtn.addEventListener('click', () => {
     }
 })
 
-const maxAmmo = 10;
+const maxAmmo = 5;
 myCanvas.addEventListener('click', (e) => {
     let dest = getProjectileDestination(myCanvas, e);
     if (gameIsOn && projectiles.length < maxAmmo) {
@@ -200,6 +257,9 @@ myCanvas.addEventListener('click', (e) => {
         checkSound() ? playAudio('outOfAmmo'): "" ;
     }
 })
+
+//A l'initialisation de la page
+updateAmmo();
 
 soundCtrl.addEventListener('click', () => {
     setSound();
