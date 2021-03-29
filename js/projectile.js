@@ -21,13 +21,13 @@ class Projectile {
             this.sens = {};
             if (this.dest.x < this.x) {
                 this.sens.x = -1;
-            } else { // gestion du cas où = ?
+            } else {
                 this.sens.x = 1;
             }
             // sens de déplacement {x,y} y = -1:haut, y = 1:bas
             if (this.dest.y < this.y) {
                 this.sens.y = -1;
-            } else { // gestion du cas où = ?
+            } else {
                 this.sens.y = 1;
             }
 
@@ -69,12 +69,7 @@ class Projectile {
     };
 
     checkIfOut() {
-        // try {
-            return (this.x < 0 || this.x > W || this.y < 0 || this.y > H) ? true : false;
-        // }
-        // catch (err) {
-        //     console.log("erreur sur CheckIfOut:", err.message, projectiles);
-        // }
+        return (this.x < 0 || this.x > W || this.y < 0 || this.y > H) ? true : false;
     }
 
     hits(targets) {

@@ -36,3 +36,6 @@ function playAudio(audio) {
 function pauseAudio(audio) {
     document.getElementById(audio).pause();
 }
+function countdownAudio(){
+    (checkSound() && chronometer.timesIsUp() === "00:05") ? playAudio('timer'):"";
+}

@@ -9,8 +9,11 @@ let timeRemaining = document.getElementById('countdown');
 let displayScore = document.getElementById('score');
 let displayAccuracy = document.getElementById('accuracy');
 let displayAmmo = document.getElementById('ammo');
+let typeWriterHTML = document.querySelector('#typewriter'); //pour l'intro
+let playingInfoHTML = document.getElementById('playing-info'); // Parent de l'élément à supp
+let introHTML = document.querySelector('.absolute'); // Enfant à supp
 
-const myCanvas = document.querySelector('#playing-area');
+const myCanvas = document.querySelector('canvas');
 myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
 
 const ctx = myCanvas.getContext('2d');
@@ -26,11 +29,10 @@ let usedAmmo = 0;
 let targetReached = 0;
 let accuracy = 0;
 
-//function appelé en continue
-function draw() {
+function draw() {//function appelé en continue
     ctx.clearRect(0, 0, W, H);
-    ctx.fillRect(400,H-300,400,300);
-    drawPicture(imgWaterGush,xImgWaterGush,yImgWaterGush, wImgWaterGush);
+    // ctx.fillRect(400,H-300,400,300);
+    drawPicture(imgWaterGush, xImgWaterGush, yImgWaterGush, wImgWaterGush);
     if (projectiles.length === maxAmmo) {
         drawPicture(imgOutofAmmo, xImgOutOfAmmo, yImgOutOfAmmo, wImgOutOfAmmo);
     }
@@ -41,38 +43,40 @@ function draw() {
         } else {
             projectile.draw();
             //Si projectile atteint cible
-            if (projectile.hits(targets)){
+            if (projectile.hits(targets)) {
                 projectiles.splice(idx, 1); // supp projectile du tableau                
                 updateScore();
                 updateAccuracy();
             };
         }
     })
+
+    countdownAudio();
     updateAmmo();
     //Création de la vague de target quand plus de target ou toutes les 15 secondes
-    if ((targets.length === 0)||(framesBeforeWave % 900 === 0)){
+    if ((targets.length === 0) || (framesBeforeWave % 900 === 0)) {
         generateTargetWave();
         framesBeforeWave = 0;
     }
 
     targets.forEach(target => target.draw());
-    splashes.forEach((splash,idx) => {
+    splashes.forEach((splash, idx) => {
         //splash affiché pendant 60 frames
-        (frames + 1 - splash.frame) % 60 === 0 ? splashes.splice(idx,1) : drawPicture(imgSplash,splash.x, splash.y,wImgSplash);        
+        (frames + 1 - splash.frame) % 60 === 0 ? splashes.splice(idx, 1) : drawPicture(imgSplash, splash.x, splash.y, wImgSplash);
     })
 }
 
-function updateAmmo(){
+function updateAmmo() {
     displayAmmo.innerHTML = `${maxAmmo - projectiles.length}/${maxAmmo}`;
     // console.log(maxAmmo, projectiles.length, (maxAmmo - projectiles.length) / maxAmmo);
 }
 
-function updateScore(){
+function updateScore() {
     points += 10;
     displayScore.innerHTML = points;
 }
 
-function updateAccuracy(){
+function updateAccuracy() {
     accuracy = Math.round(targetReached * 100 / (usedAmmo - projectiles.length));
     displayAccuracy.innerHTML = accuracy + "%";
 }
@@ -108,12 +112,29 @@ function getProjectileDestination(canvas, event) {
 }
 
 let waveNbr = 0;
-function generateTargetWave(){
+function generateTargetWave() {
 
     waveNbr++;
-    for (let i = 0; i < 5; i++){  //5 targets par vague
+    for (let i = 0; i < 5; i++) {  //5 targets par vague
         targets.push(new Target());
     }
+}
+
+function printIntro(content) {
+    let spans = [];
+    let childSpan;
+
+    for (let i = 0; i < content.length; i++) {
+        childSpan = document.createElement('span');
+        childSpan.innerHTML = content[i];
+        spans.push(childSpan);
+    }
+
+    spans.forEach((span, i) => {
+        setTimeout(() => {
+            typeWriterHTML.appendChild(span);
+        }, i * 100);
+    });
 }
 
 //Image watergushing
@@ -125,7 +146,7 @@ const yImgWaterGush = H - 80;
 
 //Image splash
 const imgSplash = document.createElement('img');
-imgSplash.src = "images/water-splash.png";
+imgSplash.src = "images/splash.svg";
 const wImgSplash = 45;
 
 //Image out of Ammo
@@ -136,7 +157,7 @@ const xImgOutOfAmmo = W - wImgOutOfAmmo - W / 120;
 const yImgOutOfAmmo = H / 60;
 
 function drawPicture(img, x, y, w) {
-    
+
     let imgRatio = img.naturalWidth / img.naturalHeight;
     let hImg = w / imgRatio;
 
@@ -149,7 +170,7 @@ function drawPicture(img, x, y, w) {
 
 let frames = 0;
 let framesBeforeWave = 0;
-function animLoop() {
+function animLoop() {   //function appelé en continue
     frames++;
     framesBeforeWave++;
 
@@ -164,7 +185,7 @@ function animLoop() {
         chronometer.stopClick();
         setPauseBtn();
         checkSound() ? pauseAudio('gameAudio') : "";
-        checkSound() ? playAudio('gameOver'): "";
+        checkSound() ? playAudio('gameOver') : "";
         checkSound() ? playAudio('bgLooseAudio') : "";
     }
 }
@@ -183,31 +204,35 @@ function startGame() {
     accuracy = 0;
     targetReached = 0;
     waveNbr = 0;
+    gameIsOn = true;
+    //MAJ info du jeu
     displayScore.innerHTML = points;
     displayAccuracy.innerHTML = "0%";
     updateAmmo();
+    //Style
     myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
     restartBtn.value = "Clean Again!";
     restartBtn.classList.remove('clignote');
-    gameIsOn = true;
+    console.log(document.body.contains(introHTML));
+    document.body.contains(introHTML) ? playingInfoHTML.removeChild(introHTML):"";
+    setPauseBtn();    
+    //Ré-initialisation chronomètre
     chronometer.stopClick();
     chronometer.resetClick();
-    chronometer.startClick(printTime);
-    setPauseBtn();
+    chronometer.startClick(printTime);    
 
     if (checkSound()) {
         setAudioToZero('gameAudio');
         playAudio('gameAudio');
-        pauseAudio('bgAudio');  
-        pauseAudio('bgLooseAudio');      
+        pauseAudio('bgAudio');
+        pauseAudio('bgLooseAudio');
     };
     animLoop();
 }
 
 const maxTarget = 10;
-function gameOver(){
-   return (chronometer.timesIsUp() === "Time's up" || targets.length > maxTarget) ? true : false;
-//    return chronometer.timesIsUp() === "Time's up" ? true : false;
+function gameOver() {
+    return (chronometer.timesIsUp() === "Time's up" || targets.length > maxTarget) ? true : false;
 }
 
 // onkeydown pour test création target
@@ -252,14 +277,15 @@ myCanvas.addEventListener('click', (e) => {
     if (gameIsOn && projectiles.length < maxAmmo) {
         usedAmmo++;
         projectiles.push(new Projectile(dest, 3));
-        checkSound() ? playAudio('bubbles'): "" ;        
-    } else if(projectiles.length === maxAmmo){
-        checkSound() ? playAudio('outOfAmmo'): "" ;
+        checkSound() ? playAudio('bubbles') : "";
+    } else if (projectiles.length === maxAmmo) {
+        checkSound() ? playAudio('outOfAmmo') : "";
     }
 })
 
 //A l'initialisation de la page
 updateAmmo();
+printIntro("Don't you think we should take great care of our planet? Engage yourself and enjoy splashing some bad guys!!");
 
 soundCtrl.addEventListener('click', () => {
     setSound();

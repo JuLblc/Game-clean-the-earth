@@ -1,4 +1,4 @@
-const images = ['cartman_hitler_icon.png', 'pablo.png', 'hanouna.png', 'kim.png', 'terrorist.jpg', 'trump1.png', 'trump2.png'];
+const images = ['cartman_hitler_icon.png', 'pablo.png', 'hanouna.png', 'kim.png', 'alcapone.png', 'trump4.png','vladimir-putin-icon.png'];
 const sensArr = [-1, 1];
 const speedArr = [[5, 2], [4, 3]];
 
@@ -60,21 +60,21 @@ class Target {
             this.sens.y *= -1;
         }
         //Change direction si rentre dans carré de 400 x 300 autour du canon
-        if ((xToCheck + this.w > 400) && (this.sens.x === 1)) {
-            if (yToCheck + this.h > H - 300) {
-                this.sens.x *= -1;
-            }
-        }
-        if ((xToCheck < 800) && (this.sens.x === -1)) {
-            if (yToCheck + this.h > H - 300) {
-                this.sens.x *= -1;
-            }
-        }
-        if ((xToCheck > 400) && (xToCheck + this.w < 800)) {
-            if (yToCheck + this.h > H - 300) {
-                this.sens.y *= -1;
-            }
-        }
+        // if ((xToCheck + this.w > 400) && (this.sens.x === 1)) {
+        //     if (yToCheck + this.h > H - 300) {
+        //         this.sens.x *= -1;
+        //     }
+        // }
+        // if ((xToCheck < 800) && (this.sens.x === -1)) {
+        //     if (yToCheck + this.h > H - 300) {
+        //         this.sens.x *= -1;
+        //     }
+        // }
+        // if ((xToCheck > 400) && (xToCheck + this.w < 800)) {
+        //     if (yToCheck + this.h > H - 300) {
+        //         this.sens.y *= -1;
+        //     }
+        // }
     }
 
 }

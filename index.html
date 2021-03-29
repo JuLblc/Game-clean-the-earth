@@ -5,49 +5,71 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Clean Earth Up</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/earth.jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/earth.png">
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <audio id="bgAudio" loop><source src="audio/ambiance.mp3"/></audio>
-    <audio id="gameAudio" loop><source src="audio/ambiance-game.mp3"/></audio>
-    <audio id="bgLooseAudio" loop><source src="audio/ambiance-storm.mp3"/></audio>
-    <audio id="bubbles"><source src="audio/bubbles.mp3"/></audio>
-    <audio id="outOfAmmo"><source src="audio/outOfAmmo.mp3"/></audio>
-    <audio id="gameOver"><source src="audio/game-over.mp3"/></audio>
-    <audio id="splash"><source src="audio/splash.mp3"/></audio>
+    <audio id="bgAudio" loop>
+        <source src="audio/ambiance.mp3" />
+    </audio>
+    <audio id="gameAudio" loop>
+        <source src="audio/ambiance-game.mp3" />
+    </audio>
+    <audio id="bgLooseAudio" loop>
+        <source src="audio/ambiance-storm.mp3" />
+    </audio>
+    <audio id="bubbles">
+        <source src="audio/bubbles.mp3" />
+    </audio>
+    <audio id="outOfAmmo">
+        <source src="audio/outOfAmmo.mp3" />
+    </audio>
+    <audio id="gameOver">
+        <source src="audio/game-over.mp3" />
+    </audio>
+    <audio id="splash">
+        <source src="audio/splash.mp3" />
+    </audio>
+    <audio id="timer">
+        <source src="audio/countdown.mp3" />
+    </audio>
     <nav>
         <img src="images/clean6.png" alt="logo">
     </nav>
     <main>
         <div id="playing-content">
             <div id="playing-info">
-                <div>
+                <div class="info-container">
                     <img src="images/timer.svg">
                     <p id="countdown">01:00</p>
                 </div>
-                <div>
+                <div class="info-container">
                     <p>Score: </p>
                     <p id="score">0</p>
                 </div>
-                <div>
+                <div class="info-container">
                     <img src="images/accuracy.svg">
                     <p id="accuracy">0%</p>
                 </div>
-                <div>
+                <div class="info-container">
                     <img src="images/robinet.svg">
                     <p id="ammo"></p>
                 </div>
-                <div>
-                    <img src="images/Mute_Icon.svg" id="sound-img">                 
+                <div class="info-container">
+                    <img src="images/Mute_Icon.svg" id="sound-img">
+                </div>
+                <div class="absolute">
+                    <img src="images/earth.png">
+                    <h3 id="typewriter"></h3>                    
                 </div>
             </div>
-            <canvas id="playing-area" width="1200" height="600"></canvas>
+            <canvas id="playing-area" width="1200" height="600">        
+            </canvas>
             <div id="btns">
                 <input type="button" id="restart" class="btn clignote" value="Let's clean!">
                 <input type="button" id="pause" class="btn disabled" value="Pause" disabled>
-            </div>
+            </div>            
         </div>
     </main>
 </body>
@@ -56,4 +78,5 @@
 <script type="text/javascript" src="js/audio.js"></script>
 <script type="text/javascript" src="js/countdown.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
+
 </html>
