@@ -19,6 +19,9 @@ myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
 const ctx = myCanvas.getContext('2d');
 const W = ctx.canvas.width;
 const H = ctx.canvas.height;
+// const noGoMinW = 400;
+// const noGoMaxW = 800;
+// const noGoH = H - 300;
 
 let gameIsOn = false;
 let projectiles = [];
@@ -31,10 +34,12 @@ let accuracy = 0;
 
 function draw() {//function appelé en continue
     ctx.clearRect(0, 0, W, H);
+    // ctx.globalAlpha = 0.2;
     // ctx.fillRect(400,H-300,400,300);
+    // ctx.globalAlpha = 1;
     drawPicture(imgWaterGush, xImgWaterGush, yImgWaterGush, wImgWaterGush);
-    if (projectiles.length === maxAmmo) {
-        drawPicture(imgOutofAmmo, xImgOutOfAmmo, yImgOutOfAmmo, wImgOutOfAmmo);
+    if (projectiles.length === maxAmmo) {        
+        drawPicture(imgOutofAmmo, xImgOutOfAmmo, yImgOutOfAmmo, wImgOutOfAmmo);        
     }
     projectiles.forEach((projectile, idx) => {
         if (projectile.checkIfOut()) {
@@ -52,6 +57,7 @@ function draw() {//function appelé en continue
     })
 
     countdownAudio();
+    chronometer.timesIsUp() === "00:05" ? document.querySelector('#countdown').classList.add('count'):"";
     updateAmmo();
     //Création de la vague de target quand plus de target ou toutes les 15 secondes
     if ((targets.length === 0) || (framesBeforeWave % 900 === 0)) {
@@ -113,7 +119,6 @@ function getProjectileDestination(canvas, event) {
 
 let waveNbr = 0;
 function generateTargetWave() {
-
     waveNbr++;
     for (let i = 0; i < 5; i++) {  //5 targets par vague
         targets.push(new Target());
@@ -213,10 +218,10 @@ function startGame() {
     myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
     restartBtn.value = "Clean Again!";
     restartBtn.classList.remove('clignote');
-    console.log(document.body.contains(introHTML));
     document.body.contains(introHTML) ? playingInfoHTML.removeChild(introHTML):"";
     setPauseBtn();    
     //Ré-initialisation chronomètre
+    document.querySelector('#countdown').classList.remove('count');
     chronometer.stopClick();
     chronometer.resetClick();
     chronometer.startClick(printTime);    

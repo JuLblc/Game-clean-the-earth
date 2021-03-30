@@ -1,4 +1,4 @@
-const images = ['cartman_hitler_icon.png', 'pablo.png', 'hanouna.png', 'kim.png', 'alcapone.png', 'trump4.png','vladimir-putin-icon.png'];
+const images = ['cartman_hitler_icon.png', 'pablo.png', 'hanouna.png', 'kim.png', 'alcapone.png', 'trump4.png', 'vladimir-putin-icon.png'];
 const sensArr = [-1, 1];
 const speedArr = [[5, 2], [4, 3]];
 
@@ -21,9 +21,15 @@ class Target {
 
             this.w = 60 - waveNbr * 5;
             this.h = this.w / imgRatio;
-            this.x = random(0, W - this.w);    //x de départ
-            this.y = random(0, H - this.h);    //y de départ
-
+            //Pour éviter la zone interdite            
+            // this.x = random(0, W - this.w);
+            // if ((this.x + this.w < 400) || (this.x > 800)) {
+            //     this.y = random(0, H - this.h);
+            // } else {
+            //     this.y = random(0, H - 300);
+            // }
+            this.x = random(0, W - this.w);
+            this.y = random(0, H - this.h);
             // sens de déplacement {x,y} x = 1:droite, x = -1:gauche, y = -1:haut, y = 1:bas
             this.sens = {};
             this.sens.x = sensArr[random(0, sensArr.length)]; // Initialisation aléatoire. Soit -1 soit 1
@@ -50,31 +56,22 @@ class Target {
         this.x += this.speed.x * this.sens.x;
         this.y += this.speed.y * this.sens.y;
         //Change direction avant de sortir du Canvas
-        let xToCheck = this.x + this.speed.x * this.sens.x;
-        let yToCheck = this.y + this.speed.y * this.sens.y;
-
-        if (xToCheck + this.w > W || xToCheck < 0) {
+        if (this.x + this.w > W || this.x < 0) {
             this.sens.x *= -1;
         }
-        if (yToCheck + this.h > H || yToCheck < 0) {
+        if (this.y + this.h > H || this.y < 0) {
             this.sens.y *= -1;
         }
         //Change direction si rentre dans carré de 400 x 300 autour du canon
-        // if ((xToCheck + this.w > 400) && (this.sens.x === 1)) {
-        //     if (yToCheck + this.h > H - 300) {
+        // if (this.y + this.h > H - 300) {
+        //     if (((this.x + this.w > 400) && (this.x < 800) && (this.sens.x === 1)) || ((this.x + this.w > 400) && (this.x < 800) && (this.sens.x === -1))) {
         //         this.sens.x *= -1;
         //     }
-        // }
-        // if ((xToCheck < 800) && (this.sens.x === -1)) {
-        //     if (yToCheck + this.h > H - 300) {
-        //         this.sens.x *= -1;
-        //     }
-        // }
-        // if ((xToCheck > 400) && (xToCheck + this.w < 800)) {
-        //     if (yToCheck + this.h > H - 300) {
+        //     if ((this.x > 400) && (this.x + this.w < 800) && (this.sens.y === 1)) {
         //         this.sens.y *= -1;
+        //         this.sens.x *= -1;
         //     }
+        //     console.log("x:",this.x, "x + w:", this.x + this.w,"y:",this.y);
         // }
     }
-
 }

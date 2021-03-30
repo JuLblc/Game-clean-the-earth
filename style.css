@@ -112,6 +112,23 @@ canvas{
     margin: 15px;
 }
 
+.count{
+    color:#e50513;
+    font-size:1em;
+    animation-name: count;
+    animation-duration: 1s;
+    animation-iteration-count: 5;
+    width: 100px;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 1px 1px 2px #e50513;
+}
+  
+@keyframes count {
+    from {font-size:1em;}
+    to {font-size:1.5em}
+}
+
 /*sm - small (768px and up)
 md - medium (992px and up)
 lg - large (1200px and up)
