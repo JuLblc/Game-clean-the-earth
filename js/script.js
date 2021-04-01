@@ -234,12 +234,12 @@ function startGame() {
     restartBtn.value = "Clean Again!";
     restartBtn.classList.remove('clignote');
     document.body.contains(introHTML) ? playingInfoHTML.removeChild(introHTML) : "";
-    setPauseBtn();
     //Ré-initialisation chronomètre
     document.querySelector('#countdown').classList.remove('count');
     chronometer.stopClick();
     chronometer.resetClick();
     chronometer.startClick(printTime);
+    setPauseBtn();
 
     if (checkSound()) {
         setAudioToZero('gameAudio');
