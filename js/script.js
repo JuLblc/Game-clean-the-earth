@@ -32,6 +32,17 @@ let usedAmmo = 0;
 let targetReached = 0;
 let accuracy = 0;
 
+//Image watergushing
+const wImgWaterGush = 60;
+const imgWaterGush = new Objet("images/watergun.png", wImgWaterGush, W / 2 - wImgWaterGush / 2, H - 80);
+
+//Image splash
+const wImgSplash = 45;
+
+//Image out of Ammo
+const wImgOutOfAmmo = 45;
+const imgOutofAmmo = new Objet("images/save-water.svg", wImgOutOfAmmo, W - wImgOutOfAmmo - W / 120, H / 60);
+
 function draw() {//function appelé en continue
     ctx.clearRect(0, 0, W, H);
     // ctx.globalAlpha = 0.2;
@@ -39,10 +50,8 @@ function draw() {//function appelé en continue
     // ctx.globalAlpha = 1;
 
     imgWaterGush.draw();
-    // drawPicture(imgWaterGush, xImgWaterGush, yImgWaterGush, wImgWaterGush);
     if (projectiles.length === maxAmmo) {
         imgOutofAmmo.draw();
-        // drawPicture(imgOutofAmmo, xImgOutOfAmmo, yImgOutOfAmmo, wImgOutOfAmmo);
     }
     projectiles.forEach((projectile, idx) => {
         if (projectile.checkIfOut()) {
@@ -59,16 +68,10 @@ function draw() {//function appelé en continue
         }
     })
 
-    //Création de la vague de target quand plus de target ou toutes les 15 secondes
-    if ((targets.length === 0) || (framesBeforeWave % 900 === 0)) {
-        generateTargetWave();
-        framesBeforeWave = 0;
-    }
-
     targets.forEach(target => target.draw());
     splashes.forEach((splash, idx) => {
         //splash affiché pendant 60 frames
-        (frames + 1 - splash.frame) % 60 === 0 ? splashes.splice(idx, 1) : drawPicture(imgSplash, splash.x, splash.y, wImgSplash);
+        (frames + 1 - splash.frame) % 60 === 0 ? splashes.splice(idx, 1) : splash.draw();
     })
 }
 
@@ -142,46 +145,6 @@ function printIntro(content) {
     });
 }
 
-//Test new branch essai refactorisation code
-//Image watergushing
-// const imgWaterGush = document.createElement('img');
-// imgWaterGush.src = "images/watergun.png";
-// const wImgWaterGush = 60;
-// const xImgWaterGush = W / 2 - wImgWaterGush / 2;
-// const yImgWaterGush = H - 80;
-
-const wImgWaterGush = 60;
-const imgWaterGush = new Objet("images/watergun.png", wImgWaterGush, W / 2 - wImgWaterGush / 2, H - 80);
-
-
-//Image splash
-const imgSplash = document.createElement('img');
-imgSplash.src = "images/splash.svg";
-const wImgSplash = 45;
-
-//Image out of Ammo
-// const imgOutofAmmo = document.createElement('img');
-// imgOutofAmmo.src = "images/save-water.svg";
-// const wImgOutOfAmmo = 45;
-// const xImgOutOfAmmo = W - wImgOutOfAmmo - W / 120;
-// const yImgOutOfAmmo = H / 60;
-
-const wImgOutOfAmmo = 45;
-const imgOutofAmmo = new Objet("images/save-water.svg", wImgOutOfAmmo, W - wImgOutOfAmmo - W / 120, H / 60);
-
-
-function drawPicture(img, x, y, w) {
-
-    let imgRatio = img.naturalWidth / img.naturalHeight;
-    let hImg = w / imgRatio;
-
-    if (!img) {
-        console.log('image fn drawPicture non chargée');
-        return; // if `img` is not loaded yet => don't draw
-    }
-    ctx.drawImage(img, x, y, w, hImg);
-}
-
 let frames = 0;
 let framesBeforeWave = 0;
 function animLoop() {   //function appelé en continue
@@ -189,6 +152,12 @@ function animLoop() {   //function appelé en continue
     framesBeforeWave++;
 
     gameIsOn ? draw() : "";
+
+    //Création de la vague de target quand plus de target ou toutes les 15 secondes
+    if ((targets.length === 0) || (framesBeforeWave % 900 === 0)) {
+        generateTargetWave();
+        framesBeforeWave = 0;
+    }
 
     //Son et style chrono
     countdownAudio();
@@ -256,7 +225,6 @@ function gameOver() {
 }
 
 // onkeydown pour test création target
-let objets = [];
 document.addEventListener('keydown', event => {
     event.key === "t" ? targets.push(new Target()) : "";
     //     event.key === "m" ? targets.forEach(target => target.moveTarget()) : "";  

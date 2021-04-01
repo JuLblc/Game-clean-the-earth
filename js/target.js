@@ -9,7 +9,6 @@ function random(from, to) {
 
 class Target {
     constructor() {
-        console.log("creation target");
 
         let subSpeedArr = speedArr[random(0, speedArr.length)];
         const imgTarget = document.createElement('img');
@@ -44,11 +43,7 @@ class Target {
         imgTarget.src = "images/" + images[random(0, images.length)];
     }
     draw() {
-        if (!this.imgTarget) {
-            console.log('image drop non chargée');
-            return; // if `this.imgDrop` is not loaded yet => don't draw
-        }
-        // console.log("dessin target", "x:", this.ac.x, "y:", this.ac.y);
+        if (!this.imgTarget) return; // if `this.imgDrop` is not loaded yet => don't draw
         this.moveTarget();
         ctx.drawImage(this.imgTarget, this.x, this.y, this.w, this.h);
     }

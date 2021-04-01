@@ -1,8 +1,6 @@
 class Projectile {
     constructor(dest, speed) {
 
-        console.log("creation projectile");
-
         this.dest = dest; // position de destination {x, y}
         this.speed = speed; // vitesse de déplacement
 
@@ -34,19 +32,13 @@ class Projectile {
             this.move = {}; // pixel de déplacement
             this.dist = {}; // distance {x - x',y - y'}
             this.hypo = 0;  // Calcul de l'hypothénuse selon pythagore
-
-            // console.log("creation projectile", "ac:", this.ac, "dest:", this.dest, "speed:", this.speed, "sens:", this.sens);
         }
         imgDrop.src = "images/waterdrop.png";
     }
 
     draw() {
-        if (!this.imgDrop) {
-            console.log('image drop non chargée');
-            return; // if `this.imgDrop` is not loaded yet => don't draw
-        }
-
-        // console.log("dessin projectile", "x:", this.ac.x, "y:", this.ac.y);
+        if (!this.imgDrop) return; // if `this.imgDrop` is not loaded yet => don't draw
+        
         this.moveProjectile();
         ctx.drawImage(this.imgDrop, this.x, this.y, this.w, this.h);
     }
@@ -80,7 +72,7 @@ class Projectile {
                 target.y + target.h > this.y &&     // bas de la target vs haut du projectile
                 target.y < this.y + this.h) {       // haut de la target vs bas du projectile
                 targets.splice(idx, 1);             // supp target du tableau
-                splashes.push({x: target.x,y: target.y,frame:frames});    //ajout splash
+                splashes.push(new Splash("images/splash.svg",wImgSplash,target.x,target.y,frames));//ajout splash
                 checkSound() ? playAudio('splash'): "";
                 targetReached++;                        
             }

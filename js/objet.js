@@ -1,5 +1,5 @@
 class Objet {
-    constructor(src, w , x, y) {
+    constructor(src, w, x, y) {
         const imgObj = document.createElement('img');
         imgObj.onload = () => {
             this.imgObj = imgObj;
@@ -14,11 +14,14 @@ class Objet {
     }
 
     draw() {
-        if (!this.imgObj) {
-            console.log('image Obj non chargée');
-            return; // if `this.imgDrop` is not loaded yet => don't draw
-        }
-        // console.log("dessin projectile", "x:", this.ac.x, "y:", this.ac.y);
+        if (!this.imgObj) return; // if `this.imgDrop` is not loaded yet => don't draw
         ctx.drawImage(this.imgObj, this.x, this.y, this.w, this.h);
+    }
+}
+
+class Splash extends Objet {
+    constructor(src, w, x, y, frame) {
+        super(src, w, x, y);
+        this.frame = frame;
     }
 }
