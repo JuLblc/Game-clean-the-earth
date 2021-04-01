@@ -56,9 +56,6 @@ function draw() {//function appelé en continue
         }
     })
 
-    countdownAudio();
-    chronometer.timesIsUp() === "00:05" ? document.querySelector('#countdown').classList.add('count'):"";
-    updateAmmo();
     //Création de la vague de target quand plus de target ou toutes les 15 secondes
     if ((targets.length === 0) || (framesBeforeWave % 900 === 0)) {
         generateTargetWave();
@@ -180,6 +177,12 @@ function animLoop() {   //function appelé en continue
     framesBeforeWave++;
 
     gameIsOn ? draw() : "";
+
+    //Son et style chrono
+    countdownAudio();
+    chronometer.timesIsUp() === "00:05" ? document.querySelector('#countdown').classList.add('count'):"";
+
+    updateAmmo();
 
     if (!gameOver()) {
         raf = requestAnimationFrame(animLoop);
