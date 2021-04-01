@@ -37,9 +37,12 @@ function draw() {//function appelé en continue
     // ctx.globalAlpha = 0.2;
     // ctx.fillRect(400,H-300,400,300);
     // ctx.globalAlpha = 1;
-    drawPicture(imgWaterGush, xImgWaterGush, yImgWaterGush, wImgWaterGush);
-    if (projectiles.length === maxAmmo) {        
-        drawPicture(imgOutofAmmo, xImgOutOfAmmo, yImgOutOfAmmo, wImgOutOfAmmo);        
+
+    imgWaterGush.draw();
+    // drawPicture(imgWaterGush, xImgWaterGush, yImgWaterGush, wImgWaterGush);
+    if (projectiles.length === maxAmmo) {
+        imgOutofAmmo.draw();
+        // drawPicture(imgOutofAmmo, xImgOutOfAmmo, yImgOutOfAmmo, wImgOutOfAmmo);
     }
     projectiles.forEach((projectile, idx) => {
         if (projectile.checkIfOut()) {
@@ -141,11 +144,15 @@ function printIntro(content) {
 
 //Test new branch essai refactorisation code
 //Image watergushing
-const imgWaterGush = document.createElement('img');
-imgWaterGush.src = "images/watergun.png";
+// const imgWaterGush = document.createElement('img');
+// imgWaterGush.src = "images/watergun.png";
+// const wImgWaterGush = 60;
+// const xImgWaterGush = W / 2 - wImgWaterGush / 2;
+// const yImgWaterGush = H - 80;
+
 const wImgWaterGush = 60;
-const xImgWaterGush = W / 2 - wImgWaterGush / 2;
-const yImgWaterGush = H - 80;
+const imgWaterGush = new Objet("images/watergun.png", wImgWaterGush, W / 2 - wImgWaterGush / 2, H - 80);
+
 
 //Image splash
 const imgSplash = document.createElement('img');
@@ -153,11 +160,15 @@ imgSplash.src = "images/splash.svg";
 const wImgSplash = 45;
 
 //Image out of Ammo
-const imgOutofAmmo = document.createElement('img');
-imgOutofAmmo.src = "images/save-water.svg";
+// const imgOutofAmmo = document.createElement('img');
+// imgOutofAmmo.src = "images/save-water.svg";
+// const wImgOutOfAmmo = 45;
+// const xImgOutOfAmmo = W - wImgOutOfAmmo - W / 120;
+// const yImgOutOfAmmo = H / 60;
+
 const wImgOutOfAmmo = 45;
-const xImgOutOfAmmo = W - wImgOutOfAmmo - W / 120;
-const yImgOutOfAmmo = H / 60;
+const imgOutofAmmo = new Objet("images/save-water.svg", wImgOutOfAmmo, W - wImgOutOfAmmo - W / 120, H / 60);
+
 
 function drawPicture(img, x, y, w) {
 
@@ -181,7 +192,7 @@ function animLoop() {   //function appelé en continue
 
     //Son et style chrono
     countdownAudio();
-    chronometer.timesIsUp() === "00:05" ? document.querySelector('#countdown').classList.add('count'):"";
+    chronometer.timesIsUp() === "00:05" ? document.querySelector('#countdown').classList.add('count') : "";
 
     updateAmmo();
 
@@ -222,13 +233,13 @@ function startGame() {
     myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
     restartBtn.value = "Clean Again!";
     restartBtn.classList.remove('clignote');
-    document.body.contains(introHTML) ? playingInfoHTML.removeChild(introHTML):"";
-    setPauseBtn();    
+    document.body.contains(introHTML) ? playingInfoHTML.removeChild(introHTML) : "";
+    setPauseBtn();
     //Ré-initialisation chronomètre
     document.querySelector('#countdown').classList.remove('count');
     chronometer.stopClick();
     chronometer.resetClick();
-    chronometer.startClick(printTime);    
+    chronometer.startClick(printTime);
 
     if (checkSound()) {
         setAudioToZero('gameAudio');
@@ -245,13 +256,11 @@ function gameOver() {
 }
 
 // onkeydown pour test création target
+let objets = [];
 document.addEventListener('keydown', event => {
     event.key === "t" ? targets.push(new Target()) : "";
+    //     event.key === "m" ? targets.forEach(target => target.moveTarget()) : "";  
 });
-// onkeydown pour test move target
-// document.addEventListener('keydown', event => {
-//     event.key === "m" ? targets.forEach(target => target.moveTarget()) : "";
-// });
 
 restartBtn.addEventListener('click', () => {
     startGame();
