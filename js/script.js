@@ -139,6 +139,7 @@ function printIntro(content) {
     });
 }
 
+//Test new branch essai refactorisation code
 //Image watergushing
 const imgWaterGush = document.createElement('img');
 imgWaterGush.src = "images/watergun.png";
