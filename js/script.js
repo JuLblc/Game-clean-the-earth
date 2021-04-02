@@ -162,6 +162,8 @@ function animLoop() {   //function appelé en continue
     //Son et style chrono
     countdownAudio();
     chronometer.timesIsUp() === "00:05" ? document.querySelector('#countdown').classList.add('count') : "";
+    chronometer.timesIsUp() === "00:05" ? document.querySelector('#time').setAttribute('src','images/timer red.svg'): "";
+
 
     updateAmmo();
 
@@ -204,6 +206,7 @@ function startGame() {
     restartBtn.classList.remove('clignote');
     document.body.contains(introHTML) ? playingInfoHTML.removeChild(introHTML) : "";
     //Ré-initialisation chronomètre
+    document.querySelector('#time').setAttribute('src','images/timer.svg')
     document.querySelector('#countdown').classList.remove('count');
     chronometer.stopClick();
     chronometer.resetClick();
