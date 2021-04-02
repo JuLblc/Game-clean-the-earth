@@ -157,13 +157,12 @@ function animLoop() {   //function appelé en continue
     if ((targets.length === 0) || (framesBeforeWave % 900 === 0)) {
         generateTargetWave();
         framesBeforeWave = 0;
-    }
+    }    
 
     //Son et style chrono
     countdownAudio();
     chronometer.timesIsUp() === "00:05" ? document.querySelector('#countdown').classList.add('count') : "";
     chronometer.timesIsUp() === "00:05" ? document.querySelector('#time').setAttribute('src','images/timer red.svg'): "";
-
 
     updateAmmo();
 

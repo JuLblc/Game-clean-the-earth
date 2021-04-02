@@ -74,6 +74,7 @@ class Projectile {
                 targets.splice(idx, 1);             // supp target du tableau
                 splashes.push(new Splash("images/splash.svg",wImgSplash,target.x,target.y,frames));//ajout splash
                 checkSound() ? playAudio('splash'): "";
+                (checkSound() && targets.length === 0) ? playAudio('killingspree') : "";
                 targetReached++;                        
             }
         });
