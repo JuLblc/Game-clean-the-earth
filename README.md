@@ -5,20 +5,23 @@
 ## Introduction
 This is a super cool exercise that I did at the end of the first module of Ironhack. The first project is designed to apply the principles (HTML, CSS & JS basics, responsive Web Design using Flexbox) I have been taught since the start of the bootcamp.
 To do so, I created a friendly shooting game using canvas.
+
 ![Game Board](https://raw.githubusercontent.com/JuLblc/Game-clean-the-earth/master/images/screenshot.png)
 
 **How to play:**
 - Start the game
 - Try to splash as many the moving targets possible - Anticipate their move!
 - You have 1 minute - Do your best!
+- You can shoot max. 5 water ammunition. 
+  If you hit a target or if the ammo is out of the screen, your water tank get refill!
 
 _Side note:_ Make sure to turn on the sound for even mor fun! :sound:
 
 ## Setup
 
-1. Play on-line [Play on-line](http://somecoolsite.com)
+1. [Play on-line](http://somecoolsite.com)
 
-or
+		or
 
 2. If you’d like to view my project in your browser:
 

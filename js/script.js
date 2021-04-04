@@ -76,8 +76,19 @@ function draw() {//function appelé en continue
 }
 
 function updateAmmo() {
+    ammo = maxAmmo - projectiles.length;
     displayAmmo.innerHTML = `${maxAmmo - projectiles.length}/${maxAmmo}`;
-    // console.log(maxAmmo, projectiles.length, (maxAmmo - projectiles.length) / maxAmmo);
+    //Style
+    if (ammo <= 1) {//De 0 à 1 => rouge
+        displayAmmo.style.color = "#e50513";
+        document.querySelector('#img-ammo').setAttribute('src', 'images/robinet-rouge.svg');
+    } else if ((ammo > 1) && (ammo <= 3)) {//De 1 à 3 => Orange
+        displayAmmo.style.color = "#F6830F";
+        document.querySelector('#img-ammo').setAttribute('src', 'images/robinet-orange.svg');
+    } else {// Sinon vert
+        displayAmmo.style.color = "#024400";
+        document.querySelector('#img-ammo').setAttribute('src', 'images/robinet-green.svg');
+    }
 }
 
 function updateScore() {
@@ -88,6 +99,17 @@ function updateScore() {
 function updateAccuracy() {
     accuracy = Math.round(targetReached * 100 / (usedAmmo - projectiles.length));
     displayAccuracy.innerHTML = accuracy + "%";
+    //Style
+    if (accuracy <= 25) {//De 0 à 25% => rouge
+        displayAccuracy.style.color = "#e50513";
+        document.querySelector('#img-accuracy').setAttribute('src', 'images/accuracy-red.svg');
+    } else if ((accuracy > 25) && (accuracy <= 75)) {//De 25% à 75% => Orange
+        displayAccuracy.style.color = "#F6830F";
+        document.querySelector('#img-accuracy').setAttribute('src', 'images/accuracy-orange.svg');
+    } else {// Sinon vert
+        displayAccuracy.style.color = "#024400";
+        document.querySelector('#img-accuracy').setAttribute('src', 'images/accuracy-green.svg');
+    }
 }
 
 function setPauseBtn() {
@@ -157,12 +179,12 @@ function animLoop() {   //function appelé en continue
     if ((targets.length === 0) || (framesBeforeWave % 900 === 0)) {
         generateTargetWave();
         framesBeforeWave = 0;
-    }    
+    }
 
     //Son et style chrono
     countdownAudio();
     chronometer.timesIsUp() === "00:05" ? document.querySelector('#countdown').classList.add('count') : "";
-    chronometer.timesIsUp() === "00:05" ? document.querySelector('#time').setAttribute('src','images/timer red.svg'): "";
+    chronometer.timesIsUp() === "00:05" ? document.querySelector('#time').setAttribute('src', 'images/timer red.svg') : "";
 
     updateAmmo();
 
@@ -191,6 +213,7 @@ function startGame() {
     splashes = [];
     points = 0;
     usedAmmo = 0;
+    ammo = maxAmmo;
     accuracy = 0;
     targetReached = 0;
     waveNbr = 0;
@@ -204,8 +227,10 @@ function startGame() {
     restartBtn.value = "Clean Again!";
     restartBtn.classList.remove('clignote');
     document.body.contains(introHTML) ? playingInfoHTML.removeChild(introHTML) : "";
+    displayAccuracy.style.color = "black";
+    document.querySelector('#img-accuracy').setAttribute('src', 'images/accuracy.svg');
     //Ré-initialisation chronomètre
-    document.querySelector('#time').setAttribute('src','images/timer.svg')
+    document.querySelector('#time').setAttribute('src', 'images/timer.svg')
     document.querySelector('#countdown').classList.remove('count');
     chronometer.stopClick();
     chronometer.resetClick();
@@ -260,6 +285,7 @@ pauseBtn.addEventListener('click', () => {
 })
 
 const maxAmmo = 5;
+let ammo = maxAmmo;
 myCanvas.addEventListener('click', (e) => {
     let dest = getProjectileDestination(myCanvas, e);
     if (gameIsOn && projectiles.length < maxAmmo) {
@@ -272,7 +298,6 @@ myCanvas.addEventListener('click', (e) => {
 })
 
 //A l'initialisation de la page
-updateAmmo();
 printIntro("Don't you think we should take great care of our planet? Engage yourself and enjoy splashing some bad guys!!");
 
 soundCtrl.addEventListener('click', () => {
