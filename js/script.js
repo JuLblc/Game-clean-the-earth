@@ -62,7 +62,6 @@ function draw() {//function appelé en continue
             //Si projectile atteint cible
             if (projectile.hits(targets)) {
                 projectiles.splice(idx, 1); // supp projectile du tableau                
-                updateScore();
                 updateAccuracy();
             };
         }
@@ -91,8 +90,8 @@ function updateAmmo() {
     }
 }
 
-function updateScore() {
-    points += 10;
+function updateScore(pointWave) {
+    points += 8 + pointWave;
     displayScore.innerHTML = points;
 }
 
@@ -146,7 +145,7 @@ let waveNbr = 0;
 function generateTargetWave() {
     waveNbr++;
     for (let i = 0; i < 5; i++) {  //5 targets par vague
-        targets.push(new Target());
+        targets.push(new Target(waveNbr * 2));
     }
 }
 

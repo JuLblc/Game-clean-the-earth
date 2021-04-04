@@ -8,8 +8,9 @@ function random(from, to) {
 }
 
 class Target {
-    constructor() {
+    constructor(point) {
 
+        this.point = point;
         let subSpeedArr = speedArr[random(0, speedArr.length)];
         const imgTarget = document.createElement('img');
 
