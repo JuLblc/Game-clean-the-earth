@@ -38,7 +38,7 @@ class Projectile {
 
     draw() {
         if (!this.imgDrop) return; // if `this.imgDrop` is not loaded yet => don't draw
-        
+
         this.moveProjectile();
         ctx.drawImage(this.imgDrop, this.x, this.y, this.w, this.h);
     }
@@ -72,11 +72,16 @@ class Projectile {
                 target.y + target.h > this.y &&     // bas de la target vs haut du projectile
                 target.y < this.y + this.h) {       // haut de la target vs bas du projectile
                 targets.splice(idx, 1);             // supp target du tableau
-                splashes.push(new Splash("images/splash.svg",wImgSplash,target.x,target.y,frames));//ajout splash
-                checkSound() ? playAudio('splash'): "";
+                splashes.push(new Splash("images/splash.svg", wImgSplash, target.x, target.y, frames));//ajout splash
+                scores.push(new ScoreBox(`+${target.point + 8}`, target.x, target.y + 60, 20, frames))         //ajout score
+                checkSound() ? playAudio('splash') : "";
                 updateScore(target.point);
-                (checkSound() && targets.length === 0) ? playAudio('killingspree') : "";
-                targetReached++;                        
+                (checkSound() && targets.length === 0) ? playAudio(bonusSound[random(0, bonusSound.length)]) : "";
+                targetReached++;
+                if (targets.length === 0) {
+                    updateScore(20 - 8 + waveNbr * 10);
+                    scores.push(new ScoreBox(`BONUS +${10 + waveNbr * 10}`, 550, 50, 30, frames))
+                }
             }
         });
         return initLength > targets.length ? true : false;

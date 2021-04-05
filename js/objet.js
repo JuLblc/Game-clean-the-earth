@@ -25,3 +25,21 @@ class Splash extends Objet {
         this.frame = frame;
     }
 }
+
+class ScoreBox {
+    constructor(text,x, y,size,frame){
+        this.text = text;
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.frame = frame;
+    }
+
+    draw(){
+        ctx.font = `900 ${this.size}px Roboto`;
+        ctx.fillStyle = "#E50513";
+        ctx.globalAlpha = 0.6;
+        ctx.fillText(this.text, this.x, this.y);
+        ctx.globalAlpha = 1;
+    }
+}

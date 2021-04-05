@@ -27,6 +27,7 @@ let gameIsOn = false;
 let projectiles = [];
 let targets = [];
 let splashes = [];
+let scores = [];
 let points = 0;
 let usedAmmo = 0;
 let targetReached = 0;
@@ -69,8 +70,12 @@ function draw() {//function appelé en continue
 
     targets.forEach(target => target.draw());
     splashes.forEach((splash, idx) => {
-        //splash affiché pendant 60 frames
+        //splashes affichés pendant 60 frames
         (frames + 1 - splash.frame) % 60 === 0 ? splashes.splice(idx, 1) : splash.draw();
+    })
+    scores.forEach((score, idx) => {
+        //scores affichés pendant 60 frames
+        (frames + 1 - score.frame) % 60 === 0 ? scores.splice(idx, 1) : score.draw();
     })
 }
 
@@ -79,7 +84,7 @@ function updateAmmo() {
     displayAmmo.innerHTML = `${maxAmmo - projectiles.length}/${maxAmmo}`;
     //Style
     if (ammo <= 1) {//De 0 à 1 => rouge
-        displayAmmo.style.color = "#e50513";
+        displayAmmo.style.color = "#e50513"; 
         document.querySelector('#img-ammo').setAttribute('src', 'images/robinet-rouge.svg');
     } else if ((ammo > 1) && (ammo <= 3)) {//De 1 à 3 => Orange
         displayAmmo.style.color = "#F6830F";
@@ -168,16 +173,18 @@ function printIntro(content) {
 
 let frames = 0;
 let framesBeforeWave = 0;
-function animLoop() {   //function appelé en continue
-    frames++;
-    framesBeforeWave++;
+function animLoop() {   //function appelé en continue    
+    // gestion jeu en pause
+    if (gameIsOn) {
+        frames++;
+        framesBeforeWave++;
+        draw();
 
-    gameIsOn ? draw() : "";
-
-    //Création de la vague de target quand plus de target ou toutes les 15 secondes
-    if ((targets.length === 0) || (framesBeforeWave % 900 === 0)) {
-        generateTargetWave();
-        framesBeforeWave = 0;
+        //Création de la vague de target quand plus de target ou toutes les 15 secondes
+        if ((targets.length === 0) || (framesBeforeWave % 900 === 0)) {
+            generateTargetWave();
+            framesBeforeWave = 0;
+        }
     }
 
     //Son et style chrono
@@ -210,6 +217,7 @@ function startGame() {
     projectiles = [];
     targets = [];
     splashes = [];
+    scores = [];
     points = 0;
     usedAmmo = 0;
     ammo = maxAmmo;
@@ -218,6 +226,7 @@ function startGame() {
     waveNbr = 0;
     gameIsOn = true;
     //MAJ info du jeu
+    timeRemaining.innerHTML = "01:00";
     displayScore.innerHTML = points;
     displayAccuracy.innerHTML = "0%";
     updateAmmo();

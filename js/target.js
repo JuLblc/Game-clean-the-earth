@@ -1,4 +1,5 @@
 const images = ['cartman_hitler_icon.png', 'pablo.png', 'hanouna.png', 'kim.png', 'alcapone.png', 'trump4.png', 'vladimir-putin-icon.png'];
+const bonusSound = ['killingspree','multikill','unstoppable','dominating'];
 const sensArr = [-1, 1];
 const speedArr = [[5, 2], [4, 3]];
 
@@ -45,7 +46,7 @@ class Target {
     }
     draw() {
         if (!this.imgTarget) return; // if `this.imgDrop` is not loaded yet => don't draw
-        // this.moveTarget();
+        this.moveTarget();
         ctx.drawImage(this.imgTarget, this.x, this.y, this.w, this.h);
     }
     moveTarget() {
