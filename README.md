@@ -12,14 +12,16 @@ To do so, I created a friendly shooting game using canvas.
 - Start the game
 - Try to splash as many the moving targets possible - Anticipate their move!
 - You have 1 minute - Do your best!
+- Don't let you surrender otherwise the game is over!
 - You can shoot max. 5 water ammunition. 
   If you hit a target or if the ammo is out of the screen, your water tank get refill!
+- The more targets you hit, the harder to reach they become and the more points you score!!
 
-_Side note:_ Make sure to turn on the sound for even mor fun! :sound:
+_Side note:_ Make sure to turn on the sound for even more fun! :sound:
 
 ## Setup
 
-1. [Play on-line](http://somecoolsite.com)
+1. [Play on-line](https://julblc.github.io/Game-clean-the-earth/index.html)
 
 		or
 

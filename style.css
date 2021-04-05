@@ -9,6 +9,7 @@
 body{
     margin: 0;
     font-family: Roboto;
+    user-select: none;
 }
 nav{
     background-color:var(--nav-backgrd-clr);
