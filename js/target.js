@@ -1,5 +1,5 @@
 const images = ['cartman_hitler_icon.png', 'pablo.png', 'hanouna.png', 'kim.png', 'alcapone.png', 'trump4.png', 'vladimir-putin-icon.png'];
-const bonusSound = ['killingspree','multikill','unstoppable','dominating'];
+const bonusSound = ['killingspree', 'multikill', 'unstoppable', 'dominating'];
 const sensArr = [-1, 1];
 const speedArr = [[5, 2], [4, 3]];
 
@@ -49,6 +49,13 @@ class Target {
         this.moveTarget();
         ctx.drawImage(this.imgTarget, this.x, this.y, this.w, this.h);
     }
+
+    // crashWith(a, b) {
+    //     return (
+    //         a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y
+    //     );
+    // }
+
     moveTarget() {
         this.x += this.speed.x * this.sens.x;
         this.y += this.speed.y * this.sens.y;
@@ -59,7 +66,7 @@ class Target {
         if (this.y + this.h > H || this.y < 0) {
             this.sens.y *= -1;
         }
-        //Change direction si rentre dans carré de 400 x 300 autour du canon
+        // Change direction si rentre dans carré de 400 x 300 autour du canon
         // if (this.y + this.h > H - 300) {
         //     if (((this.x + this.w > 400) && (this.x < 800) && (this.sens.x === 1)) || ((this.x + this.w > 400) && (this.x < 800) && (this.sens.x === -1))) {
         //         this.sens.x *= -1;
@@ -70,5 +77,7 @@ class Target {
         //     }
         //     console.log("x:",this.x, "x + w:", this.x + this.w,"y:",this.y);
         // }
+
+
     }
 }

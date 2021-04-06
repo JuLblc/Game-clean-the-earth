@@ -10,42 +10,18 @@
 </head>
 
 <body>
-    <audio id="bgAudio" loop>
-        <source src="audio/ambiance.mp3" />
-    </audio>
-    <audio id="gameAudio">
-        <source src="audio/ambiance-game.mp3" />
-    </audio>
-    <audio id="bgLooseAudio" loop>
-        <source src="audio/ambiance-storm.mp3" />
-    </audio>
-    <audio id="bubbles">
-        <source src="audio/bubbles.mp3" />
-    </audio>
-    <audio id="outOfAmmo">
-        <source src="audio/outOfAmmo.mp3" />
-    </audio>
-    <audio id="gameOver">
-        <source src="audio/game-over-classique.mp3" />
-    </audio>
-    <audio id="splash">
-        <source src="audio/splash.mp3" />
-    </audio>
-    <audio id="timer">
-        <source src="audio/countdown.mp3" />
-    </audio>
-    <audio id="killingspree">
-        <source src="audio/killingspree.mp3" />
-    </audio>
-    <audio id="multikill">
-        <source src="audio/multikill.mp3" />
-    </audio>
-    <audio id="unstoppable">
-        <source src="audio/unstoppable.mp3" />
-    </audio>
-    <audio id="dominating">
-        <source src="audio/dominating.mp3" />
-    </audio>
+    <audio id="bgAudio" src="audio/ambiance.mp3" loop></audio>
+    <audio id="gameAudio" src="audio/ambiance-game.mp3"></audio>
+    <audio id="bgLooseAudio" src="audio/ambiance-storm.mp3" loop></audio>
+    <audio id="bubbles" src="audio/bubbles.mp3"></audio>
+    <audio id="outOfAmmo" src="audio/outOfAmmo.mp3"></audio>
+    <audio id="gameOver" src="audio/game-over-classique.mp3"></audio>
+    <audio id="splash" src="audio/splash.mp3"></audio>
+    <audio id="timer" src="audio/countdown.mp3"></audio>
+    <audio id="killingspree" src="audio/killingspree.mp3"></audio>
+    <audio id="multikill" src="audio/multikill.mp3"></audio>
+    <audio id="unstoppable" src="audio/unstoppable.mp3"></audio>
+    <audio id="dominating" src="audio/dominating.mp3"></audio>
     <nav>
         <img src="images/clean6.png" alt="logo">
     </nav>
@@ -73,23 +49,23 @@
                 </div>
                 <div class="absolute">
                     <img src="images/earth.png">
-                    <h3 id="typewriter"></h3>                    
+                    <h3 id="typewriter"></h3>
                 </div>
             </div>
-            <canvas id="playing-area" width="1200" height="600">        
+            <canvas id="playing-area" width="1200" height="600">
             </canvas>
             <div id="btns">
                 <input type="button" id="restart" class="btn clignote" value="Let's clean!">
                 <input type="button" id="pause" class="btn disabled" value="Pause" disabled>
-            </div>            
+            </div>
         </div>
     </main>
+    <script type="text/javascript" src="js/objet.js"></script>
+    <script type="text/javascript" src="js/target.js"></script>
+    <script type="text/javascript" src="js/projectile.js"></script>
+    <script type="text/javascript" src="js/audio.js"></script>
+    <script type="text/javascript" src="js/countdown.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
 </body>
-<script type="text/javascript" src="js/objet.js"></script>
-<script type="text/javascript" src="js/target.js"></script>
-<script type="text/javascript" src="js/projectile.js"></script>
-<script type="text/javascript" src="js/audio.js"></script>
-<script type="text/javascript" src="js/countdown.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
 
 </html>
