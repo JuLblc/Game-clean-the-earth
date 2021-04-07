@@ -19,9 +19,7 @@ myCanvas.style.backgroundImage = "url('images/game-background.jpg')";
 const ctx = myCanvas.getContext('2d');
 const W = ctx.canvas.width;
 const H = ctx.canvas.height;
-// const noGoMinW = 400;
-// const noGoMaxW = 800;
-// const noGoH = H - 300;
+// const noGoZone = {x:400,y:H-150,w:400,h:150};
 
 let gameIsOn = false;
 let projectiles = [];
@@ -46,8 +44,9 @@ const imgOutofAmmo = new Objet("images/save-water.svg", wImgOutOfAmmo, W - wImgO
 
 function draw() {//function appelé en continue
     ctx.clearRect(0, 0, W, H);
+    //Matérialise la noGoZone
     // ctx.globalAlpha = 0.2;
-    // ctx.fillRect(400,H-300,400,300);
+    // ctx.fillRect(noGoZone.x,noGoZone.y,noGoZone.w,noGoZone.h);
     // ctx.globalAlpha = 1;
 
     imgWaterGush.draw();
