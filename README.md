@@ -10,7 +10,7 @@ To do so, I created a friendly shooting game using canvas.
 
 **How to play:**
 - Start the game
-- Try to splash as many the moving targets possible - Anticipate their move!
+- Try to splash as many moving targets as possible - Anticipate their move!
 - You have 1 minute - Do your best!
 - Don't let you surrender otherwise the game is over!
 - You can shoot max. 5 water ammunition. 
